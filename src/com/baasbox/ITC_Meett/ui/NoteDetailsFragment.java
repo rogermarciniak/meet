@@ -1,4 +1,4 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.baasbox.android.BaasDocument;
-import com.baasbox.deardiary.R;
+import com.baasbox.ITC_Meett.R;
 
 
 /**

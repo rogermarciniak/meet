@@ -1,15 +1,13 @@
-package com.baasbox.deardiary;
+package com.baasbox.ITC_Meett;
 
 import android.app.Application;
-import android.util.Log;
-import com.baasbox.android.*;
 
-import java.util.List;
+import com.baasbox.android.*;
 
 /**
  * Created by Andrea Tortorella on 24/01/14.
  */
-public class DearDiary extends Application {
+public class ITC_Meet extends Application {
 
     @Override
     public void onCreate() {

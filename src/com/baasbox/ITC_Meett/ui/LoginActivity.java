@@ -1,9 +1,8 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.RequestToken;
-import com.baasbox.deardiary.R;
+import com.baasbox.ITC_Meett.R;
 
 /**
  * Created by Andrea Tortorella on 24/01/14.

@@ -1,4 +1,4 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -7,9 +7,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 import com.baasbox.android.*;
-import com.baasbox.deardiary.R;
+import com.baasbox.ITC_Meett.R;
 
 /**
  * Created by Andrea Tortorella on 24/01/14.

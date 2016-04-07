@@ -1,11 +1,11 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import com.baasbox.deardiary.R;
+import com.baasbox.ITC_Meett.R;
 
 /**
  * Created by Andrea Tortorella on 24/01/14.

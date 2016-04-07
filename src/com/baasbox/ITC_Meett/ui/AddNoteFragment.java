@@ -1,4 +1,4 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.*;
 import android.widget.EditText;
 import com.baasbox.android.BaasDocument;
-import com.baasbox.deardiary.R;
+import com.baasbox.ITC_Meett.R;
 
 /**
  * Created by Andrea Tortorella on 24/01/14.

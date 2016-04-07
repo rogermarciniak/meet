@@ -1,4 +1,4 @@
-package com.baasbox.deardiary.ui;
+package com.baasbox.ITC_Meett.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
