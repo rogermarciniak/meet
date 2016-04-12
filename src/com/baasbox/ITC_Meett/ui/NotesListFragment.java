@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * Created by Andrea Tortorella on 24/01/14.
+ * @authors:
+ * Roger Marciniak (c00169733)
+ * Bartosz Zurawski(c00165634)
  */
 public class NotesListFragment extends ListFragment {
 

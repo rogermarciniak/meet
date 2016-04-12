@@ -5,7 +5,9 @@ import android.app.Application;
 import com.baasbox.android.*;
 
 /**
- * Created by Andrea Tortorella on 24/01/14.
+ * @authors:
+ * Roger Marciniak (c00169733)
+ * Bartosz Zurawski(c00165634)
  */
 public class ITC_Meet extends Application {
 

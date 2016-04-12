@@ -11,7 +11,9 @@ import com.baasbox.android.BaasDocument;
 import java.util.List;
 
 /**
- * Created by Andrea Tortorella on 24/01/14.
+ * @authors:
+ * Roger Marciniak (c00169733)
+ * Bartosz Zurawski(c00165634)
  */
 class NotesAdapter extends BaseAdapter {
 
