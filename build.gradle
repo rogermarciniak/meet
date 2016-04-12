@@ -35,7 +35,6 @@ android {
         }
     }
     defaultConfig {
-        applicationId 'ITC_Meet'
     }
     productFlavors {
     }

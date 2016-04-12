@@ -14,7 +14,7 @@ public class ITC_Meet extends Application {
         super.onCreate();
         //todo 1.2
         BaasBox.builder(this).setAuthentication(BaasBox.Config.AuthType.SESSION_TOKEN)
-                .setApiDomain("10.0.2.0")
+                .setApiDomain("vps.yatsu.eu")
                 .setPort(9000)
                 .setAppCode("1234567890")
                 .init();
