@@ -186,6 +186,15 @@ public class LoginActivity extends FragmentActivity {
         }
     }
 
+    String token= "243345779348196";// a valid token from the provider
+    BaasUser.signupWithProvider(Social.FACEBOOK,token,token,new BaasHandler<BaasUser>(){
+        @Override
+        public void handler(BaasResult<BaasUser> res) {
+            if(res.isSuccess()){
+                BaasUser current = res.value();
+            }
+        });
+
     //todo 3.2
     private final BaasHandler<BaasUser> onComplete =
             new BaasHandler<BaasUser>() {
