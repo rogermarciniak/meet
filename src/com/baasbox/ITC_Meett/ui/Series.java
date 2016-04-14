@@ -3,6 +3,7 @@ package com.baasbox.ITC_Meett.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -16,13 +17,16 @@ import com.baasbox.ITC_Meett.R;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
+import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.logging.Filter;
 
 public class Series extends ActionBarActivity {
 
@@ -67,6 +71,37 @@ public class Series extends ActionBarActivity {
     void UploadResults(MyInt x){
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
+        BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
+                .orderBy("_creation_date desc")
+                .where("_author='" + BaasUser.current().getName() + "'")
+                .criteria();
+
+
+        BaasDocument.fetchAll("Preferences",filter,
+                new BaasHandler<List<BaasDocument>>() {
+                    @Override
+                    public void handle(BaasResult<List<BaasDocument>> res) {
+                        if (res.isSuccess()) {
+                            for (BaasDocument doc:res.value()) {
+                                Log.d("LOG","Doc: "+doc);
+                                doc.delete(new BaasHandler<Void>() {
+                                    @Override
+                                    public void handle(BaasResult<Void> res) {
+                                        if (res.isSuccess()) {
+                                            Log.d("LOG", "Document deleted");
+                                        } else {
+                                            Log.e("LOG", "error", res.error());
+                                        }
+                                    }
+                                });
+
+                            }
+                        } else {
+                        }
+                    }
+                });
+
+
         BaasDocument doc = new BaasDocument("Preferences");
         doc.putString("Date",currentDate)
                 .putString("Author", BaasUser.current().getName().toString())
@@ -98,6 +133,8 @@ public class Series extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series);
 
+
+
         //Do testow uzywam randomowych zdjec
         final String[] urlString = {    "http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg",
                                         "http://vps.yatsu.eu:9000/file/f93b39e6-b1fd-4116-9e78-26e84ccc25ef?X-BB-SESSION=f6300162-6f1c-420b-8686-8d9f03da1058&X-BAASBOX-APPCODE=1234567890",
@@ -122,6 +159,7 @@ public class Series extends ActionBarActivity {
         final ImageButton imgButt2 = (ImageButton) findViewById(R.id.opt2);
         final Button upload = (Button) findViewById(R.id.button);
         final Button ret = (Button) findViewById(R.id.button2);
+
         imgButt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
