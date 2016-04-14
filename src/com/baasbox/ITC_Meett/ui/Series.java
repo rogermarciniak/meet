@@ -182,6 +182,7 @@ public class Series extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 UploadResults(seriesResult);
+                upload.setEnabled(false);
             }
         });
         ret.setEnabled(false);
