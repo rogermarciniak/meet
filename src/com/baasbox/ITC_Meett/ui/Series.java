@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.baasbox.ITC_Meett.R;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasFile;
+import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
 
 import java.io.InputStream;
@@ -21,10 +22,22 @@ import java.io.InputStream;
 public class Series extends ActionBarActivity {
 
     void sendResult(MyInt x){
-    BaasDocument pref = new BaasDocument("Preferences");
+        BaasDocument doc = new BaasDocument("Preferences");
+        doc.putString("Date","My new post title")
+                .putString("Picks", Integer.toString(x.getValue()));
+        doc.save(new BaasHandler<BaasDocument>() {
+            @Override
+            public void handle(BaasResult<BaasDocument> res) {
+                if (res.isSuccess()) {
+                    Log.d("LOG", "Saved: " + res.value());
+                } else {
 
+                }
+            }
+        });
     }
-    void presentResults( MyInt x){
+
+    void presentResults(MyInt x) {
         final TextView txt1 = (TextView) findViewById(R.id.txtView);
         txt1.setText(Integer.toString(x.getValue()));
     }
@@ -63,6 +76,7 @@ public class Series extends ActionBarActivity {
                     int seriesRes = seriesResult.getValue();
                     if (temp > numberOfEntries) {
                         presentResults(seriesResult);
+                        sendResult(seriesResult);
                     } else {
                         if (seriesRes == 0) {
                             seriesRes = seriesRes + 1;
@@ -91,6 +105,7 @@ public class Series extends ActionBarActivity {
                     int seriesRes = seriesResult.getValue();
                     if (temp > numberOfEntries){
                         presentResults(seriesResult);
+                        sendResult(seriesResult);
                     }
                     else {
                         if(seriesRes == 0){
