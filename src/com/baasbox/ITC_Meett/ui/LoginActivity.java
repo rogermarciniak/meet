@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -21,12 +20,10 @@ import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.RequestToken;
 import com.baasbox.ITC_Meett.R;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
- * @authors: Roger Marciniak (c00169733)
+ * @authors:
+ * Roger Marciniak (c00169733)
  * Bartosz Zurawski(c00165634)
  */
 public class LoginActivity extends FragmentActivity {
@@ -43,19 +40,15 @@ public class LoginActivity extends FragmentActivity {
     private TextView mLoginStatusMessageView;
 
 
+
     private RequestToken mSignupOrLogin;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState!=null){
             mSignupOrLogin = savedInstanceState.getParcelable(SIGNUP_TOKEN_KEY);
         }
 
@@ -64,7 +57,7 @@ public class LoginActivity extends FragmentActivity {
         mUserView.setText(mUsername);
         mLoginStatusView = findViewById(R.id.login_status);
         mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+        mLoginStatusMessageView = (TextView)findViewById(R.id.login_status_message);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -84,21 +77,18 @@ public class LoginActivity extends FragmentActivity {
             }
         });
 
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 attemptLogin(false);
             }
         });
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mSignupOrLogin != null) {
+        if (mSignupOrLogin!=null){
             showProgress(false);
             mSignupOrLogin.suspend();
         }
@@ -107,7 +97,7 @@ public class LoginActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mSignupOrLogin != null) {
+        if (mSignupOrLogin!=null){
             showProgress(true);
             mSignupOrLogin.resume(onComplete);
         }
@@ -116,16 +106,16 @@ public class LoginActivity extends FragmentActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mSignupOrLogin != null) {
-            outState.putParcelable(SIGNUP_TOKEN_KEY, mSignupOrLogin);
+        if (mSignupOrLogin!=null){
+            outState.putParcelable(SIGNUP_TOKEN_KEY,mSignupOrLogin);
         }
     }
 
-    private void completeLogin(boolean success) {
+    private void completeLogin(boolean success){
         showProgress(false);
         mSignupOrLogin = null;
         if (success) {
-            Intent intent = new Intent(this, NoteListActivity.class);
+            Intent intent = new Intent(this,NoteListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -185,44 +175,33 @@ public class LoginActivity extends FragmentActivity {
         }
     }
 
-    private void signupWithBaasBox(boolean newUser) {
+    private void signupWithBaasBox(boolean newUser){
         //todo 3.1
         BaasUser user = BaasUser.withUserName(mUsername);
         user.setPassword(mPassword);
         if (newUser) {
-            mSignupOrLogin = user.signup(onComplete);
+            mSignupOrLogin=user.signup(onComplete);
         } else {
-            mSignupOrLogin = user.login(onComplete);
+            mSignupOrLogin=user.login(onComplete);
         }
     }
 
-    String token = "243345779348196";// a valid token from facebook
-    //String secret = "4f088677231a44954a2e0df0d5b5ad4d6";// a valid secret from facebook
-    BaasUser.signupWithProvider(Social.FACEBOOK,token,new BaasHandler<BaasUser>()
-    {
-        @Override
-        public void handler (BaasResult < BaasUser > res) {
-        if (res.isSuccess()) {
-            BaasUser current = res.value();
-        }
-    });
+    //todo 3.2
+    private final BaasHandler<BaasUser> onComplete =
+            new BaasHandler<BaasUser>() {
+                @Override
+                public void handle(BaasResult<BaasUser> result) {
 
-        //todo 3.2
-        private final BaasHandler<BaasUser> onComplete =
-                new BaasHandler<BaasUser>() {
-                    @Override
-                    public void handle(BaasResult<BaasUser> result) {
-
-                        mSignupOrLogin = null;
-                        if (result.isFailed()) {
-                            Log.d("ERROR", "ERROR", result.error());
-                        }
-                        completeLogin(result.isSuccess());
+                    mSignupOrLogin = null;
+                    if (result.isFailed()){
+                        Log.d("ERROR","ERROR",result.error());
                     }
-                };
+                    completeLogin(result.isSuccess());
+                }
+            };
 
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-        private void showProgress ( final boolean show){
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -258,44 +237,4 @@ public class LoginActivity extends FragmentActivity {
         }
     }
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Login Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.baasbox.ITC_Meett.ui/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Login Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.baasbox.ITC_Meett.ui/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
+}
