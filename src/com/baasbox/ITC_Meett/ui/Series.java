@@ -68,9 +68,7 @@ public class Series extends ActionBarActivity {
         }
     }
 
-    void UploadResults(MyInt x){
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-
+    void clearDB(){
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
                 .where("_author='" + BaasUser.current().getName() + "'")
@@ -100,7 +98,12 @@ public class Series extends ActionBarActivity {
                         }
                     }
                 });
+    }
+    void UploadResults(MyInt x){
 
+        clearDB();
+
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         BaasDocument doc = new BaasDocument("Preferences");
         doc.putString("Date",currentDate)
@@ -111,8 +114,7 @@ public class Series extends ActionBarActivity {
             public void handle(BaasResult<BaasDocument> res) {
                 if (res.isSuccess()) {
                     Log.d("LOG", "Saved: " + res.value());
-                }
-                else {
+                } else {
                 }
             }
         });
@@ -121,11 +123,6 @@ public class Series extends ActionBarActivity {
     void PresentResults(MyInt x) {
         final TextView txt1 = (TextView) findViewById(R.id.txtView);
         txt1.setText(Integer.toString(x.getValue()));
-    }
-
-    public void rerun() {
-        Intent intent = new Intent(this, Series.class);
-        startActivity(intent);
     }
 
     @Override
@@ -158,7 +155,6 @@ public class Series extends ActionBarActivity {
         final ImageButton imgButt1 = (ImageButton) findViewById(R.id.opt1);
         final ImageButton imgButt2 = (ImageButton) findViewById(R.id.opt2);
         final Button upload = (Button) findViewById(R.id.button);
-        final Button ret = (Button) findViewById(R.id.button2);
 
         imgButt1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +196,6 @@ public class Series extends ActionBarActivity {
                         imgButt1.setEnabled(false);
                         imgButt2.setEnabled(false);
                         upload.setEnabled(true);
-                        ret.setEnabled(true);
                     } else {
                         if (seriesRes == 0) {
                             seriesRes = seriesRes + 2;
@@ -227,12 +222,7 @@ public class Series extends ActionBarActivity {
                 upload.setEnabled(false);
             }
         });
-        ret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            rerun();
-            }
-        });
+
     }
 
 }

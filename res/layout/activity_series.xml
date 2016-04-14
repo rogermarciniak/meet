@@ -23,7 +23,9 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/txtView"
         android:layout_above="@+id/txtView"
-        android:layout_toLeftOf="@+id/txtView" />
+        android:layout_toLeftOf="@+id/txtView"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -34,7 +36,9 @@
         android:layout_toRightOf="@+id/txtView"
         android:layout_toEndOf="@+id/txtView"
         android:layout_alignBottom="@+id/opt1"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/textView"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,24 +54,12 @@
         android:layout_height="wrap_content"
         android:text="Upload Results"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp"
-        android:layout_toLeftOf="@+id/txtView"
-        android:layout_toStartOf="@+id/txtView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rerun"
-        android:id="@+id/button2"
-        android:layout_alignBottom="@+id/button"
-        android:layout_alignLeft="@+id/opt2"
-        android:layout_alignStart="@+id/opt2"
+        android:layout_alignTop="@+id/txtView"
+        android:layout_marginTop="27dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="rerun"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
 
