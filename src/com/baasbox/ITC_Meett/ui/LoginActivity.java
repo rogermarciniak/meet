@@ -198,7 +198,7 @@ public class LoginActivity extends FragmentActivity {
 
     String token = "243345779348196";// a valid token from facebook
     //String secret = "4f088677231a44954a2e0df0d5b5ad4d6";// a valid secret from facebook
-    BassUser.signupWithProvider(Social.FACEBOOK,token,new BaasHandler<BaasUser>()
+    BaasUser.signupWithProvider(Social.FACEBOOK,token,new BaasHandler<BaasUser>()
     {
         @Override
         public void handler (BaasResult < BaasUser > res) {
