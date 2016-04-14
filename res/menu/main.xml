@@ -8,6 +8,8 @@
     <item android:id="@+id/logout_action"
           android:title="Logout"
           android:showAsAction="never"/>
-
+    <item android:id="@+id/series"
+        android:title="Series"
+        android:showAsAction="never"/>
 
 </menu>

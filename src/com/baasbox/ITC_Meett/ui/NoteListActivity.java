@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+//import com.baasbox.ITC_Meett.Serie;
 import com.baasbox.android.*;
 import com.baasbox.ITC_Meett.R;
 
@@ -128,6 +130,10 @@ public class NoteListActivity extends ActionBarActivity
         } else if (item.getItemId()==R.id.logout_action){
             BaasUser.current().logout(logoutHandler);
             return true;
+        }
+        else if (item.getItemId()==R.id.series){
+            Intent intent = new Intent(this, Series.class);
+            startActivityForResult(intent, EDIT_CODE);
         }
         return super.onOptionsItemSelected(item);
     }
