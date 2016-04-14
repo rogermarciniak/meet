@@ -67,10 +67,6 @@ public class Series extends ActionBarActivity {
     void UploadResults(MyInt x){
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-
-
-
-
         BaasDocument doc = new BaasDocument("Preferences");
         doc.putString("Date",currentDate)
                 .putString("Author", BaasUser.current().getName().toString())
@@ -80,14 +76,21 @@ public class Series extends ActionBarActivity {
             public void handle(BaasResult<BaasDocument> res) {
                 if (res.isSuccess()) {
                     Log.d("LOG", "Saved: " + res.value());
-                } else { }
+                }
+                else {
+                }
             }
         });
     }
 
-    void presentResults(MyInt x) {
+    void PresentResults(MyInt x) {
         final TextView txt1 = (TextView) findViewById(R.id.txtView);
         txt1.setText(Integer.toString(x.getValue()));
+    }
+
+    public void rerun() {
+        Intent intent = new Intent(this, Series.class);
+        startActivity(intent);
     }
 
     @Override
@@ -126,7 +129,7 @@ public class Series extends ActionBarActivity {
                     int temp = passes.getValue();
                     int seriesRes = seriesResult.getValue();
                     if (temp > numberOfEntries) {
-                        presentResults(seriesResult);
+                        PresentResults(seriesResult);
                         imgButt1.setEnabled(false);
                         imgButt2.setEnabled(false);
                         upload.setEnabled(true);
@@ -155,10 +158,11 @@ public class Series extends ActionBarActivity {
                     int temp = passes.getValue();
                     int seriesRes = seriesResult.getValue();
                     if (temp > numberOfEntries) {
-                        presentResults(seriesResult);
+                        PresentResults(seriesResult);
                         imgButt1.setEnabled(false);
                         imgButt2.setEnabled(false);
                         upload.setEnabled(true);
+                        ret.setEnabled(true);
                     } else {
                         if (seriesRes == 0) {
                             seriesRes = seriesRes + 2;
@@ -185,11 +189,10 @@ public class Series extends ActionBarActivity {
                 upload.setEnabled(false);
             }
         });
-        ret.setEnabled(false);
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            rerun();
             }
         });
     }
