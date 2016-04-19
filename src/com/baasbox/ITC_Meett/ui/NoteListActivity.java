@@ -133,11 +133,13 @@ public class NoteListActivity extends ActionBarActivity
         }
         else if (item.getItemId()==R.id.series){
             Intent intent = new Intent(this, Series.class);
-            startActivityForResult(intent, EDIT_CODE);
+            startActivity(intent);
+           // startActivityForResult(intent, EDIT_CODE);
         }
         else if (item.getItemId()==R.id.profile){
             Intent intent = new Intent(this, UserProfile.class);
-            startActivityForResult(intent, EDIT_CODE);
+            //startActivityForResult(intent, EDIT_CODE);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

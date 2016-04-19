@@ -98,8 +98,6 @@ public class Series extends ActionBarActivity {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
                         if (res.isSuccess()) {
-                            //    int itt = 0;
-                            //     while(itt != 1) {
                             for (BaasDocument doc : res.value()) {
                                 Log.d("LOG", "Doc: " + doc);
                                 doc.delete(new BaasHandler<Void>() {
@@ -114,8 +112,6 @@ public class Series extends ActionBarActivity {
                                 });
                                 break;
                             }
-                            //        itt = 1;
-                            //      }
                         } else {
                         }
                     }
@@ -125,40 +121,32 @@ public class Series extends ActionBarActivity {
 
         clearDB();
 
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-
-
-
-
-       // String listString = "";
+        String currentDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
         String newString = y.toString();
 
             BaasDocument doc = new BaasDocument("Preferences");
-            doc.putString("Date", currentDate)
-                    .putString("Author",BaasUser.current().getName().toString())
-                    .putString("Interests", newString);
+            doc.put("Date", currentDate)
+                    .put("Author",BaasUser.current().getName().toString())
+                    .put("Interests", newString);
             doc.save(new BaasHandler<BaasDocument>() {
                 @Override
                 public void handle(BaasResult<BaasDocument> res) {
                     if (res.isSuccess()) {
-                        Log.d("LOG", "Saved: " + res.value());
+                        Log.d("LOG", "Zapisany: " + res.value());
                     } else {
+                        Log.e("LOG", "Ni chuja");
                     }
                 }
             });
 
-    }
-    void PresentResults(MyInt x) {
-        final TextView txt1 = (TextView) findViewById(R.id.txtView);
-        txt1.setText(Integer.toString(x.getValue()));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series);
 
-        String fileId = "46c653ea-5955-451b-bd9a-d1d9c3b8a3b5";
+       /* String fileId = "46c653ea-5955-451b-bd9a-d1d9c3b8a3b5";
         final TextView txt = (TextView) findViewById(R.id.test);
         BaasFile.fetch(fileId, new BaasHandler<BaasFile>() {
             @Override
@@ -175,7 +163,7 @@ public class Series extends ActionBarActivity {
                     txt.setText("nope");
                 }
             }
-        });
+        });*/
 
         //Do testow uzywam randomowych zdjec
      /*   final String[] urlString = {    "http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg",
@@ -220,17 +208,19 @@ public class Series extends ActionBarActivity {
                 .where("_type='" + "series" + "'")
                 .criteria();
 */
-     /*   BaasDocument.fetchAll("Data",
+   /*     final ArrayList<String> links2 = new ArrayList<String>();
+        final ArrayList<String> preferences2 = new ArrayList<String>();
+        BaasDocument.fetchAll("Data",
                 new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
                         if (res.isSuccess()) {
 
                             for (BaasDocument doc : res.value()) {
-                                String currLink = doc.getString("Link");
-                                links.add(currLink);
-                                String currPref = doc.getString("Extra");
-                                pref.add(currPref);
+                                String currLink = doc.getObject("_Link").toString();
+                                links2.add(currLink);
+                                String currPref = doc.getObject("_Extra").toString();
+                                preferences2.add(currPref);
 
 
                                 Log.d("LOG", "Doc: " + doc);
@@ -246,15 +236,14 @@ public class Series extends ActionBarActivity {
 
 
 
-
-
 */
 
-        final MyInt passes = new MyInt(0);
-        //final MyString series = new MyString("");
-        final int numberOfEntries = 6;
 
-        int val = 0;
+
+        final MyInt passes = new MyInt(0);
+        final MyInt passes2 = new MyInt(0);
+        final int numberOfEntries = 3;
+
         int temp = passes.getValue();
         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
                 .execute(links.get(temp));
@@ -266,53 +255,61 @@ public class Series extends ActionBarActivity {
         final ImageButton imgButt2 = (ImageButton) findViewById(R.id.opt2);
         final Button upload = (Button) findViewById(R.id.button);
 
-        imgButt1.setOnClickListener(new View.OnClickListener() {
+        imgButt1.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                if (imgButt1.isPressed()) {
-                    int temp = passes.getValue();
-                    if (temp > numberOfEntries -2) {
-                        imgButt1.setEnabled(false);
-                        imgButt2.setEnabled(false);
-                        upload.setEnabled(true);
-                    } else {
-                        //
+            public void onClick(View c) {
+                if(imgButt1.isPressed()){
+                    int var = passes2 .getValue();
+                    if(var <= numberOfEntries -1){
+                        int temp = passes.getValue();
                         result.add(preferences.get(temp).toString());
                         temp = temp +2;
-                        passes.setValue(temp);
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
                                 .execute(links.get(temp).toString());
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
                                 .execute(links.get(temp+1).toString());
-                       // temp = temp + 2;
-                       // passes.setValue(temp);
+                        passes.setValue(temp);
                     }
+                    else{
+                        UploadResults(result);
+                        Intent intent = new Intent(Series.this, UserProfile.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    var = var +1;
+                    passes2.setValue(var);
                 }
             }
+
         });
-        imgButt2.setOnClickListener(new View.OnClickListener() {
+        imgButt2.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                if (imgButt2.isPressed()) {
-                    int temp = passes.getValue();
-                    if (temp > numberOfEntries -2) {
-                        imgButt1.setEnabled(false);
-                        imgButt2.setEnabled(false);
-                        upload.setEnabled(true);
-                    } else {
-                        //
+            public void onClick(View c) {
+                if(imgButt2.isPressed()){
+                    int var = passes2 .getValue();
+                    if(var <= numberOfEntries -1){
+                        int temp = passes.getValue();
                         result.add(preferences.get(temp+1).toString());
                         temp = temp +2;
-                        passes.setValue(temp);
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
                                 .execute(links.get(temp).toString());
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
                                 .execute(links.get(temp+1).toString());
-                      //  temp = temp + 2;
-                       // passes.setValue(temp);
+                        passes.setValue(temp);
                     }
+                    else{
+                        UploadResults(result);
+                        Intent intent = new Intent(Series.this, UserProfile.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    var = var +1;
+                    passes2.setValue(var);
                 }
             }
+
         });
         upload.setEnabled(false);
         upload.setOnClickListener(new View.OnClickListener() {
