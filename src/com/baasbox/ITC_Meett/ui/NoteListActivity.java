@@ -135,6 +135,10 @@ public class NoteListActivity extends ActionBarActivity
             Intent intent = new Intent(this, Series.class);
             startActivityForResult(intent, EDIT_CODE);
         }
+        else if (item.getItemId()==R.id.profile){
+            Intent intent = new Intent(this, UserProfile.class);
+            startActivityForResult(intent, EDIT_CODE);
+        }
         return super.onOptionsItemSelected(item);
     }
 
