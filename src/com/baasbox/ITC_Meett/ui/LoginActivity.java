@@ -115,7 +115,7 @@ public class LoginActivity extends FragmentActivity {
         showProgress(false);
         mSignupOrLogin = null;
         if (success) {
-            Intent intent = new Intent(this,NoteListActivity.class);
+            Intent intent = new Intent(this,MainScreen.class); //Intent intent = new Intent(this,NoteListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();

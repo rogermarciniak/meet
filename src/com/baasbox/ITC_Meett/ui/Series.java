@@ -146,37 +146,6 @@ public class Series extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series);
 
-       /* String fileId = "46c653ea-5955-451b-bd9a-d1d9c3b8a3b5";
-        final TextView txt = (TextView) findViewById(R.id.test);
-        BaasFile.fetch(fileId, new BaasHandler<BaasFile>() {
-            @Override
-            public void handle(BaasResult<BaasFile> res) {
-                if (res.isSuccess()) {
-                    byte[] data = res.value().getData();
-                    String s = new String(data);
-                    Log.d("LOG", "File received");
-                    txt.setText(s);
-
-
-                } else {
-                    Log.e("LOG", "Error while streaming", res.error());
-                    txt.setText("nope");
-                }
-            }
-        });*/
-
-        //Do testow uzywam randomowych zdjec
-     /*   final String[] urlString = {    "http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg",
-                                        "http://ipolitics.ca/wp-content/uploads/2014/12/Screen-Shot-2014-12-11-at-1.43.57-PM-125x125.png",
-                                        "http://ep.yimg.com/ca/I/todofut_2271_12093767",
-                                        "http://www.coastalcapitalwealth.com/news/wp-content/uploads/2014/03/Russia-125x125.png",
-                                        "http://performancecomms.com/wp-content/uploads/2014/02/Putin-Neutral.jpg",
-                                        "http://performancecomms.com/wp-content/uploads/2014/02/Putin-Sad.jpg",
-                                        "http://shirtoid.com/wp-content/uploads/2014/03/scare-bear-sm.jpg",
-                                        "http://www.bedtimebear.com/forums/image.php?u=742&dateline=1222878059",
-                                        "http://ep.yimg.com/ca/I/todofut_2271_12093767"};
-
-*/    // final List links = new ArrayList();
         final List pref = new ArrayList();
 
         final ArrayList<String> links = new ArrayList<String>();
@@ -200,44 +169,6 @@ public class Series extends ActionBarActivity {
         preferences.add("Cats");
         final ArrayList<String> result = new ArrayList<String>();
        // links.add("http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg");
-
-
-
-       /* BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
-                .orderBy("_creation_date desc")
-                .where("_type='" + "series" + "'")
-                .criteria();
-*/
-   /*     final ArrayList<String> links2 = new ArrayList<String>();
-        final ArrayList<String> preferences2 = new ArrayList<String>();
-        BaasDocument.fetchAll("Data",
-                new BaasHandler<List<BaasDocument>>() {
-                    @Override
-                    public void handle(BaasResult<List<BaasDocument>> res) {
-                        if (res.isSuccess()) {
-
-                            for (BaasDocument doc : res.value()) {
-                                String currLink = doc.getObject("_Link").toString();
-                                links2.add(currLink);
-                                String currPref = doc.getObject("_Extra").toString();
-                                preferences2.add(currPref);
-
-
-                                Log.d("LOG", "Doc: " + doc);
-                                break;
-                            }
-
-                            //  BaasDocument doc = res.value(data);
-                        } else {
-                            Log.e("LOG", "Doc: Tutaj");
-                        }
-                    }
-                });
-
-
-
-*/
-
 
 
         final MyInt passes = new MyInt(0);
@@ -272,7 +203,7 @@ public class Series extends ActionBarActivity {
                     }
                     else{
                         UploadResults(result);
-                        Intent intent = new Intent(Series.this, UserProfile.class);
+                        Intent intent = new Intent(Series.this, MainScreen.class);
                         startActivity(intent);
                         finish();
                     }
@@ -300,7 +231,7 @@ public class Series extends ActionBarActivity {
                     }
                     else{
                         UploadResults(result);
-                        Intent intent = new Intent(Series.this, UserProfile.class);
+                        Intent intent = new Intent(Series.this, MainScreen.class);
                         startActivity(intent);
                         finish();
                     }
@@ -320,6 +251,14 @@ public class Series extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }

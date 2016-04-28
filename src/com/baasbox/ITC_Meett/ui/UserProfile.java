@@ -1,69 +1,1 @@
-package com.baasbox.ITC_Meett.ui;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import com.baasbox.ITC_Meett.R;
-import com.baasbox.android.BaasDocument;
-import com.baasbox.android.BaasHandler;
-import com.baasbox.android.BaasQuery;
-import com.baasbox.android.BaasResult;
-import com.baasbox.android.BaasUser;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
-
-public class UserProfile extends AppCompatActivity {
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
-
-
-    final TextView txt1 = (TextView) findViewById(R.id.userName);
-        txt1.setText(BaasUser.current().getName().toString());
-
-        final TextView inte1 = (TextView) findViewById(R.id.textView5);
-        final TextView inte2 = (TextView) findViewById(R.id.textView6);
-        final TextView inte3 = (TextView) findViewById(R.id.textView7);
-
-        BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
-                .orderBy("_creation_date desc")
-                .where("_author='" + BaasUser.current().getName() + "'")
-                .criteria();
-
-
-        BaasDocument.fetchAll("Preferences", filter,
-                new BaasHandler<List<BaasDocument>>() {
-                    @Override
-                    public void handle(BaasResult<List<BaasDocument>> res) {
-                        if (res.isSuccess()) {
-
-                            for (BaasDocument doc : res.value()) {
-                                String pref = doc.getString("Interests");
-                                pref = pref.substring(1, pref.length()-1);
-                                String[] parts = pref.split(",", 4);
-                                inte1.setText(parts[0]);
-                                inte2.setText(parts[1]);
-                                inte3.setText(parts[2]);
-                            }
-
-
-                        } else {
-                        }
-                    }
-                });
-
-}
-}
+package com.baasbox.ITC_Meett.ui;import android.content.Intent;import android.database.Cursor;import android.graphics.Bitmap;import android.graphics.BitmapFactory;import android.net.Uri;import android.os.Bundle;import android.provider.MediaStore;import android.support.design.widget.FloatingActionButton;import android.support.design.widget.Snackbar;import android.support.v7.app.AppCompatActivity;import android.support.v7.widget.Toolbar;import android.util.Log;import android.view.View;import android.widget.EditText;import android.widget.Gallery;import android.widget.ImageButton;import android.widget.TextView;import com.baasbox.ITC_Meett.R;import com.baasbox.android.BaasDocument;import com.baasbox.android.BaasHandler;import com.baasbox.android.BaasQuery;import com.baasbox.android.BaasResult;import com.baasbox.android.BaasUser;import org.w3c.dom.Text;import java.net.URI;import java.util.List;public class UserProfile extends AppCompatActivity {    final MyInt req = new MyInt(0);    public class MyInt {        private int value;        public MyInt(int value) {            this.value = value;        }        public int getValue() {            return value;        }        public void setValue(int value) {            this.value = value;        }    }    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_user_profile);    final TextView txt1 = (TextView) findViewById(R.id.userName);        txt1.setText(BaasUser.current().getName().toString());        final TextView inte1 = (TextView) findViewById(R.id.textView5);        final TextView inte2 = (TextView) findViewById(R.id.textView6);        final TextView inte3 = (TextView) findViewById(R.id.textView7);        BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)                .orderBy("_creation_date desc")                .where("_author='" + BaasUser.current().getName() + "'")                .criteria();        BaasDocument.fetchAll("Preferences", filter,                new BaasHandler<List<BaasDocument>>() {                    @Override                    public void handle(BaasResult<List<BaasDocument>> res) {                        if (res.isSuccess()) {                            for (BaasDocument doc : res.value()) {                                String pref = doc.getString("Interests");                                pref = pref.substring(1, pref.length() - 1);                                String[] parts = pref.split(",", 4);                                inte1.setText(parts[0]);                                inte2.setText(parts[1]);                                inte3.setText(parts[2]);                            }                        } else {                        }                    }                });        final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);        pic.setOnClickListener(new View.OnClickListener() {            @Override            public void onClick(View v) {               int PICK_IMAGE_REQUEST = 1;                req.setValue(1);                Intent intent = new Intent();                intent.setType("image/*");                intent.setAction(Intent.ACTION_GET_CONTENT);                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);            }        });}    @Override    protected void onActivityResult(int requestCode, int resultCode, Intent data) {        super.onActivityResult(requestCode, resultCode, data);        int RESULT_LOAD_IMAGE = req.getValue();        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {            Uri selectedImage = data.getData();            String[] filePathColumn = { MediaStore.Images.Media.DATA };            Cursor cursor = getContentResolver().query(selectedImage,                    filePathColumn, null, null, null);            cursor.moveToFirst();            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);            String picturePath = cursor.getString(columnIndex);            cursor.close();            Bitmap img = BitmapFactory.decodeFile(picturePath);            Bitmap resized = Bitmap.createScaledBitmap(img, 250, 250, true);            final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);            pic.setImageBitmap(resized);           //req.setValue(0);        }    }    @Override    public void onBackPressed() {        Intent intent = new Intent(this,MainScreen.class);        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);        startActivity(intent);        finish();    }}
