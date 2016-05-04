@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <!-- uses-permission android:name="android.permission.GET_ACCOUNTS" / -->
     <application
@@ -59,7 +61,8 @@
             android:name=".ui.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.MainScreen"></activity>
+        <activity android:name=".ui.MainScreen" />
+        <activity android:name=".ui.Scan"></activity>
     </application>
 
 </manifest>

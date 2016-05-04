@@ -127,7 +127,7 @@ public class Series extends ActionBarActivity {
 
             BaasDocument doc = new BaasDocument("Preferences");
             doc.put("Date", currentDate)
-                    .put("Author",BaasUser.current().getName().toString())
+                    .put("Author",BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
                     .put("Interests", newString);
             doc.save(new BaasHandler<BaasDocument>() {
                 @Override
