@@ -15,6 +15,14 @@ import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
 import com.baasbox.ITC_Meett.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -26,13 +34,13 @@ public class Scan extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         // Create an instance of GoogleAPIClient.
-        if (mGoogleApiClient == null) {
+       if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-        }
+       }
 
         final Button scanButton = (Button) findViewById(R.id.scan_button);
 
@@ -47,19 +55,38 @@ public class Scan extends AppCompatActivity {
 
     }
 
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+        }
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
     public void scanForMatches(){
 
         setMyLocation();
-
+        //TODO: query matches in a radius
     }
 
     public void setMyLocation(){
 
         BaasDocument doc = new BaasDocument("geo");
         doc.put("Author",BaasUser.current().getName())
-           .put("Latitude","lat")
-           .put("Longitude","long")
-           .put("radius","rad");
+           .put("Latitude", mLatitudeText.getText)
+           .put("Longitude",mLongitudeText.getText);
 
         doc.save(new BaasHandler<BaasDocument>() {
             @Override
@@ -67,7 +94,7 @@ public class Scan extends AppCompatActivity {
                 if(res.isSuccess()) {
                     Log.d("LOG","Saved: "+res.value());
                 } else {
-
+                    Log.e("LOG","Failed");
                 }
             }
         });
