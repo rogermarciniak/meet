@@ -15,6 +15,7 @@ import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 
+import com.baasbox.android.json.JsonObject;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -26,6 +27,8 @@ import com.google.android.gms.location.LocationServices;
 import com.baasbox.ITC_Meett.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.List;
+
 public class Scan extends AppCompatActivity {
 
     @Override
@@ -34,12 +37,12 @@ public class Scan extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         // Create an instance of GoogleAPIClient.
-       if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
+
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
        }
 
         final Button scanButton = (Button) findViewById(R.id.scan_button);
@@ -78,7 +81,19 @@ public class Scan extends AppCompatActivity {
     public void scanForMatches(){
 
         setMyLocation();
-        //TODO: query matches in a radius
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText.getText + "," + mLongitudeText.getText + ") < 0.5";
+        final BaasQuery PREPARED_QUERY =
+                BaasQuery.builder()
+                        .collection("geo")
+                        .where(whereString)
+                        .build();
+
+        PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>(){
+            @Override
+            public void handle(BaasResult<List<JsonObject>> res){
+                // handle result or failure
+            }
+        });
     }
 
     public void setMyLocation(){
