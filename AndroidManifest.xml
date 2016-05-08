@@ -49,6 +49,9 @@
         <activity
             android:name=".ui.Series"
             android:label="@string/title_activity_series" />
+        <activity
+            android:name=".ui.Scan"
+            android:label="@string/title_activity_series" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
