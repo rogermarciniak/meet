@@ -1,5 +1,5 @@
 package com.baasbox.ITC_Meett.ui;
-/*
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import com.baasbox.ITC_Meett.R;
-import com.google.android.gms.common.api.GoogleApiClient;
+
 
 import java.util.List;
 
@@ -114,4 +114,3 @@ public class Scan extends AppCompatActivity {
 
     }
 }
-*/
