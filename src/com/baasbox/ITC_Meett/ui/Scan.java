@@ -37,7 +37,6 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         // Create an instance of GoogleAPIClient.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();

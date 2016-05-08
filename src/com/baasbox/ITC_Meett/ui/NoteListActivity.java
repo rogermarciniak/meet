@@ -44,6 +44,12 @@ public class NoteListActivity extends ActionBarActivity
             startLoginScreen();
             return;
         }
+        else{
+            Intent intent = new Intent(this,MainScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
 
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("Refreshing...");
