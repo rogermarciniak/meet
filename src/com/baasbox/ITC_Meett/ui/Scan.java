@@ -29,7 +29,7 @@ import com.baasbox.ITC_Meett.R;
 
 import java.util.List;
 
-public class Scan extends AppCompatActivity {
+public class Scan extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
