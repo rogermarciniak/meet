@@ -39,11 +39,10 @@ public class Scan extends AppCompatActivity {
         // Create an instance of GoogleAPIClient.
 
         GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(LocationServices.API)
-                        .build();
-       }
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
 
         final Button scanButton = (Button) findViewById(R.id.scan_button);
 
@@ -55,7 +54,6 @@ public class Scan extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     protected void onStart() {
