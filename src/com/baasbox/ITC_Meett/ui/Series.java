@@ -135,7 +135,7 @@ public class Series extends ActionBarActivity {
                     if (res.isSuccess()) {
                         Log.d("LOG", "Zapisany: " + res.value());
                     } else {
-                        Log.e("LOG", "Ni chuja");
+                        Log.e("LOG", "Error");
                     }
                 }
             });
