@@ -17,12 +17,13 @@ import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 
 import com.baasbox.android.json.JsonObject;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import java.util.List;
 
 
-public class Scan extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks{
+public class Scan extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -63,13 +64,17 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
+    }
+
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("Connection failed", connectionResult.toString());
     }
 
     protected void onStop() {
@@ -80,7 +85,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     public void scanForMatches(){
 
         setMyLocation();
-        String whereString = "distance(Latitude,Longitude," + mLatitudeText.getText + "," + mLongitudeText.getText + ") < 0.5";
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 0.5";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
@@ -99,8 +104,8 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         BaasDocument doc = new BaasDocument("geo");
         doc.put("Author",BaasUser.current().getName())
-           .put("Latitude", mLatitudeText.getText)
-           .put("Longitude",mLongitudeText.getText);
+           .put("Latitude", mLatitudeText)
+           .put("Longitude", mLongitudeText);
 
         doc.save(new BaasHandler<BaasDocument>() {
             @Override
