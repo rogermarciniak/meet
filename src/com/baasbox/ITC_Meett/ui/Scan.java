@@ -58,7 +58,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onStart();
     }
 
-    @Override
+    @Override //NOT NULL PLZ
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
