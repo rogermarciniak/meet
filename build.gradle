@@ -38,6 +38,9 @@ android {
     }
     productFlavors {
     }
+    dexOptions {
+        preDexLibraries = false
+    }
 }
 
 dependencies {

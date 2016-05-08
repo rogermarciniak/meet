@@ -62,7 +62,7 @@
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.MainScreen" />
-        <activity android:name=".ui.Scan"></activity>
+       <!-- <activity android:name=".ui.Scan"></activity>-->
     </application>
 
 </manifest>
