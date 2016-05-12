@@ -56,6 +56,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     private ArrayList<String> arrayList;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
         scanButton.setEnabled(false);
         isGPSEnabled(scanButton);
@@ -77,39 +79,42 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
 
 
-
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View c) {
-                if (scanButton.isPressed()) {
-                    arrayList.clear();
-                    setMyLocation();
-                    scanForMatches();
-                }
-                scanButton.setEnabled(false);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        Scan.this.runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                scanButton.setEnabled(true);
-
-                            }
-                        });
+        if (scanButton != null) {
+            scanButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View c) {
+                    if (scanButton.isPressed()) {
+                        arrayList.clear();
+                        setMyLocation();
+                        scanForMatches();
                     }
-                }).start();
-            }
+                    scanButton.setEnabled(false);
 
-        });
+                    new Thread(new Runnable() {
 
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                            Scan.this.runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    scanButton.setEnabled(true);
+
+                                }
+                            });
+                        }
+                    }).start();
+                }
+
+            });
+        }
 
 
         matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -175,7 +180,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    Scan.this.startActivityForResult(myIntent, 100);
+                    Scan.this.startActivityForResult(myIntent,100);
                 }
             });
             isGPSEnabled(scanButton);
