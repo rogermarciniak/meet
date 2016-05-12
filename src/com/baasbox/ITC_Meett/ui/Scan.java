@@ -43,6 +43,8 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         final Button scanButton = (Button) findViewById(R.id.scan_button);
 
+        if (scanButton == null) throw new AssertionError();
+
         scanButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -100,6 +102,13 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     }
 
     public void setMyLocation(){
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
+        }
 
         BaasDocument doc = new BaasDocument("geo");
         doc.put("Author",BaasUser.current().getName())
