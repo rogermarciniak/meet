@@ -129,9 +129,21 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         String lati = doc.get("Latitude");
                         String longi = doc.get("Longitude");
 
+                        Location myLocation = new Location("point A");
+
+                        myLocation.setLatitude(Double.parseDouble(mLatitudeText));
+                        myLocation.setLongitude(Double.parseDouble(mLongitudeText));
+
+                        Location matchLocation = new Location("point B");
+
+                        matchLocation.setLatitude(Double.parseDouble(lati));
+                        matchLocation.setLongitude(Double.parseDouble(longi));
+
+                        float distance = myLocation.distanceTo(matchLocation);
+
                         Log.d("Pass", userName);
 
-                        String finalOutPut = userName + " " + lati + " " + longi;
+                        String finalOutPut = userName + " " + distance;
                         arrayList.add(finalOutPut);
                         adapter.notifyDataSetChanged();
                     }
