@@ -133,7 +133,6 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                     else{
                         arrayList.add("TEST TEST 2223");
                         adapter.notifyDataSetChanged();
-
                     }
             }
         });
