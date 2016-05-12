@@ -67,7 +67,7 @@ public class MainScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+        setContentView(R.layout.activity_main_screen) ;
 
         final TextView UserName = (TextView) findViewById(R.id.userN);
         UserName.setText(BaasUser.current().getName());
