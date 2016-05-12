@@ -114,18 +114,16 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                               long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 {
-                    String choosen = matchList.getItemAtPosition().toString();
-                    String userName = choosen.substring(0, choosen.lastIndexOf(" "));
+                    String chosen = matchList.getItemAtPosition(position).toString();
+                    String userName = chosen.substring(0, chosen.lastIndexOf(" "));
                     Log.e("UN", userName);
 
                     Context context = getApplicationContext();
-                    CharSequence text = userName;
                     int duration = Toast.LENGTH_LONG;
 
-                    Toast toast = Toast.makeText(context, text, duration);
+                    Toast toast = Toast.makeText(context, userName, duration);
                     toast.show();
                 }
 
@@ -165,11 +163,11 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
     public void scanForMatches(){
 
-      //  String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 5";
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
-                       // .where(whereString)
+                        .where(whereString)
                         .build();
 
         PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>() {
@@ -201,7 +199,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    arrayList.add("TEST TEST 2223");
+                    arrayList.add("list error");
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -252,7 +250,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         BaasDocument doc = new BaasDocument("geo");
         doc.put("Author",BaasUser.current().getName())
-           .put("Latitude", mLatitudeText)
+                .put("Latitude", mLatitudeText)
                 .put("Longitude", mLongitudeText);
 
         doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ),new BaasHandler<BaasDocument>() {
