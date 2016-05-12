@@ -14,12 +14,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baasbox.ITC_Meett.R;
+import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
+import com.baasbox.android.Grant;
+import com.baasbox.android.Role;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -129,7 +132,7 @@ public class Series extends ActionBarActivity {
             doc.put("Date", currentDate)
                     .put("Author",BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
                     .put("Interests", newString);
-            doc.save(new BaasHandler<BaasDocument>() {
+            doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ),new BaasHandler<BaasDocument>() {
                 @Override
                 public void handle(BaasResult<BaasDocument> res) {
                     if (res.isSuccess()) {

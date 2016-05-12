@@ -60,7 +60,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-
+        matchList.setAdapter(adapter);
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
         if (scanButton != null) {
             scanButton.setOnClickListener(new View.OnClickListener() {
@@ -116,24 +116,23 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>() {
             @Override
             public void handle(BaasResult<List<JsonObject>> res) {
-                    if (res.isSuccess()) {
-                            for (JsonObject doc : res.value()) {
+                if (res.isSuccess()) {
+                    for (JsonObject doc : res.value()) {
 
-                                String userName = doc.getString("Author");
-                                String lati = doc.get("Latitude");
-                                String longi = doc.get("Longitude");
+                        String userName = doc.getString("Author");
+                        String lati = doc.get("Latitude");
+                        String longi = doc.get("Longitude");
 
-                                Log.d("Pass", userName);
+                        Log.d("Pass", userName);
 
-                                String finalOutPut = userName + " " + lati + " " + longi;
-                                arrayList.add(finalOutPut);
-                                adapter.notifyDataSetChanged();
-                            }
-                    }
-                    else{
-                        arrayList.add("TEST TEST 2223");
+                        String finalOutPut = userName + " " + lati + " " + longi;
+                        arrayList.add(finalOutPut);
                         adapter.notifyDataSetChanged();
                     }
+                } else {
+                    arrayList.add("TEST TEST 2223");
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
