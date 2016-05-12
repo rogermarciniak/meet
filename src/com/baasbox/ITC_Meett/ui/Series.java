@@ -149,7 +149,7 @@ public class Series extends ActionBarActivity {
         final List pref = new ArrayList();
 
         final ArrayList<String> links = new ArrayList<String>();
-        links.add("http://www.klydewarrenpark.org/media/images/Activities/reading.jpg");
+       links.add("http://www.klydewarrenpark.org/media/images/Activities/reading.jpg");
         links.add("http://www.roadtogrammar.com/movies/fimls.jpg");
         links.add("http://www.ballingerathleticperformance.com/wp-content/uploads/2012/01/crowie.jpg");
         links.add("http://www.natural-homeremedies.com/fitness/wp-content/uploads/2010/10/Health-Benefits-Of-Swimming.jpg");
@@ -169,6 +169,9 @@ public class Series extends ActionBarActivity {
         preferences.add("Cats");
         final ArrayList<String> result = new ArrayList<String>();
        // links.add("http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg");
+
+
+
 
 
         final MyInt passes = new MyInt(0);

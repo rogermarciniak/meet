@@ -60,7 +60,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onStart();
     }
 
-    @Override //NOT NULL PLZ
+    @Override
     public void onConnected(Bundle connectionHint) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
@@ -109,6 +109,36 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             mLatitudeText = String.valueOf(mLastLocation.getLatitude());
             mLongitudeText = String.valueOf(mLastLocation.getLongitude());
         }
+    //Moje i chuj
+        BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
+                .orderBy("_creation_date desc")
+                .where("_author='" + BaasUser.current().getName() + "'")
+                .criteria();
+
+
+        BaasDocument.fetchAll("geo", filter,
+                new BaasHandler<List<BaasDocument>>() {
+                    @Override
+                    public void handle(BaasResult<List<BaasDocument>> res) {
+                        if (res.isSuccess()) {
+                            for (BaasDocument doc : res.value()) {
+                                Log.d("LOG", "Doc: " + doc);
+                                doc.delete(new BaasHandler<Void>() {
+                                    @Override
+                                    public void handle(BaasResult<Void> res) {
+                                        if (res.isSuccess()) {
+                                            Log.d("LOG", "Document deleted");
+                                        } else {
+                                            Log.e("LOG", "error", res.error());
+                                        }
+                                    }
+                                });
+                                break;
+                            }
+                        } else {
+                        }
+                    }
+                });
 
         BaasDocument doc = new BaasDocument("geo");
         doc.put("Author",BaasUser.current().getName())

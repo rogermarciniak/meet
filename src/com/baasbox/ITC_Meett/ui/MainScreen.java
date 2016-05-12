@@ -42,6 +42,12 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    private void onChat(){
+        Intent intent = new Intent(this,Chat.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private RequestToken logoutToken;
     private final BaasHandler<Void> logoutHandler =
@@ -64,6 +70,7 @@ public class MainScreen extends AppCompatActivity {
         final Button series = (Button) findViewById(R.id.button3);
         final Button logout = (Button) findViewById(R.id.button4);
         final Button scan = (Button) findViewById(R.id.button5);
+        final Button chat = (Button) findViewById(R.id.button6);
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +94,12 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onScan();
+            }
+        });
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChat();
             }
         });
     }
