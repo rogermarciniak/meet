@@ -29,6 +29,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         matchList.setAdapter(adapter);
+
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
         if (scanButton != null) {
             scanButton.setOnClickListener(new View.OnClickListener() {
