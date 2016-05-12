@@ -72,6 +72,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 @Override
                 public void onClick(View c) {
                     if (scanButton.isPressed()) {
+                        arrayList.clear();
                         setMyLocation();
                         scanForMatches();
                     }
