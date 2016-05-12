@@ -106,7 +106,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
-                        .where(whereString)
+                        .where("distance(Latitude,Longitude,52.680379,-7.0273137) < 5")
                         .build();
 
         PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>() {
@@ -195,7 +195,8 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             }
         });
 
-
+            arrayList.add("TESTY");
+            arrayList.add("okokoko");
     }
 
 
