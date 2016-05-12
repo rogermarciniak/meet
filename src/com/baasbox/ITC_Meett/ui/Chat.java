@@ -62,7 +62,7 @@ public class Chat extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         chat.invalidateViews();
 
-                       if (BaasUser.current().getName() == doc.getString("Receiver")) {
+                        if (BaasUser.current().getName() == doc.getString("Receiver")) {
 
                             arrayList.add(doc.getString("Message"));
                             adapter.notifyDataSetChanged();
@@ -86,10 +86,10 @@ public class Chat extends AppCompatActivity {
                                 }
 */
 
+                    }
                 }
             }
-        }
-    });
+        });
 
         chat.setAdapter(adapter);
 
@@ -109,7 +109,7 @@ public class Chat extends AppCompatActivity {
                             .put("Sender", BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
                             .put("Receiver", "test1")
                             .put("Message", newString);
-                    doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ),new BaasHandler<BaasDocument>() {
+                    doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ), new BaasHandler<BaasDocument>() {
                         @Override
                         public void handle(BaasResult<BaasDocument> res) {
                             if (res.isSuccess()) {
@@ -129,9 +129,11 @@ public class Chat extends AppCompatActivity {
 
             }
         });
-    }
 
-    @Override
+
+        }
+
+        @Override
     public void onBackPressed() {
         Intent intent = new Intent(this,MainScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

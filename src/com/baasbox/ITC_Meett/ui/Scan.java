@@ -3,13 +3,16 @@ package com.baasbox.ITC_Meett.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -33,6 +36,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +66,8 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .addApi(LocationServices.API)
                 .build();
 
+
+
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -76,11 +83,57 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         setMyLocation();
                         scanForMatches();
                     }
+                    scanButton.setEnabled(false);
+
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                            Scan.this.runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    scanButton.setEnabled(true);
+
+                                }
+                            });
+                        }
+                    }).start();
                 }
 
             });
         }
+
+
+        matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                               long arg3) {
+                {
+                    String choosen = matchList.getItemAtPosition().toString();
+                    String userName = choosen.substring(0, choosen.lastIndexOf(" "));
+                    Log.e("UN", userName);
+
+                    Context context = getApplicationContext();
+                    CharSequence text = userName;
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+            }});
+
     }
+
+
 
     protected void onStart() {
         mGoogleApiClient.connect();
@@ -131,15 +184,15 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
                         Location myLocation = new Location("point A");
 
-                        myLocation.setLatitude(Double.parseDouble(mLatitudeText));
-                        myLocation.setLongitude(Double.parseDouble(mLongitudeText));
+                        myLocation.setLatitude(52.6803972);
+                        myLocation.setLongitude(-7.0273629);
 
                         Location matchLocation = new Location("point B");
 
                         matchLocation.setLatitude(Double.parseDouble(lati));
                         matchLocation.setLongitude(Double.parseDouble(longi));
 
-                        float distance = myLocation.distanceTo(matchLocation);
+                        float distance = (myLocation.distanceTo(matchLocation)) / 1000;
 
                         Log.d("Pass", userName);
 
