@@ -57,17 +57,23 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .addApi(LocationServices.API)
                 .build();
 
-        final Button scanButton = (Button) findViewById(R.id.buttonbutton);
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View c) {
-                if (scanButton.isPressed()) {
-                    setMyLocation();
-                    scanForMatches();
-                }
-            }
+        final ListView matchList = (ListView) findViewById(R.id.matchList);
+        arrayList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 
-        });
+        final Button scanButton = (Button) findViewById(R.id.buttonbutton);
+        if (scanButton != null) {
+            scanButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View c) {
+                    if (scanButton.isPressed()) {
+                        setMyLocation();
+                        scanForMatches();
+                    }
+                }
+
+            });
+        }
     }
 
     protected void onStart() {
@@ -99,14 +105,12 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     }
 
     public void scanForMatches(){
-        final ListView matchList = (ListView) findViewById(R.id.matchList);
-        arrayList = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+
         String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 0.5";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
-                        .where("distance(Latitude,Longitude,52.680379,-7.0273137) < 5")
+                        .where(whereString)
                         .build();
 
         PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>() {
@@ -124,14 +128,12 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                                 String finalOutPut = userName + " " + lati + " " + longi;
                                 arrayList.add(finalOutPut);
                                 adapter.notifyDataSetChanged();
-                                matchList.invalidateViews();
-
                             }
                     }
                     else{
                         arrayList.add("TEST TEST 2223");
                         adapter.notifyDataSetChanged();
-                        matchList.invalidateViews();
+
                     }
             }
         });
@@ -148,7 +150,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             mLatitudeText = String.valueOf(mLastLocation.getLatitude());
             mLongitudeText = String.valueOf(mLastLocation.getLongitude());
         }
-    //Moje i chuj
+        //clear previous location entries
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
                 .where("_author='" + BaasUser.current().getName() + "'")
@@ -194,11 +196,13 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 }
             }
         });
-
-            arrayList.add("TESTY");
-            arrayList.add("okokoko");
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 }
-
