@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.baasbox.ITC_Meett.R;
+import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
@@ -24,6 +25,8 @@ import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 
+import com.baasbox.android.Grant;
+import com.baasbox.android.Role;
 import com.baasbox.android.json.JsonObject;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -108,11 +111,11 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 0.5";
+      //  String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 5";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
-                        .where(whereString)
+                       // .where(whereString)
                         .build();
 
         PREPARED_QUERY.query(new BaasHandler<List<JsonObject>>() {
@@ -186,7 +189,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
            .put("Latitude", mLatitudeText)
                 .put("Longitude", mLongitudeText);
 
-        doc.save(new BaasHandler<BaasDocument>() {
+        doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ),new BaasHandler<BaasDocument>() {
             @Override
             public void handle(BaasResult<BaasDocument> res) {
                 if (res.isSuccess()) {
