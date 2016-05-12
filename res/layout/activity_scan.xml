@@ -9,14 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.baasbox.ITC_Meett.ui.Scan">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/matchList"
+        android:layout_above="@+id/buttonbutton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan for Matches"
-        android:id="@+id/scan_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#2fa5bf"
-        android:elegantTextHeight="false"
-        android:background="#d8fdda" />
+        android:text="New Button"
+        android:id="@+id/buttonbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/matchList"
+        android:layout_alignEnd="@+id/matchList"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

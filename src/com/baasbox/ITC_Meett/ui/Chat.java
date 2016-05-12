@@ -62,14 +62,14 @@ public class Chat extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         chat.invalidateViews();
 
-                        if (BaasUser.current().getName() == doc.getString("Receiver")) {
+                  /*      if (BaasUser.current().getName() == doc.getString("Receiver")) {
 
                             arrayList.add(doc.getString("Message"));
                             adapter.notifyDataSetChanged();
                             chat.invalidateViews();
                         } else {
                             Log.e("ERROR", "NIE WIEM");
-                        }
+                        }*/
                           /*     if (doc.getString("Receiver") == BaasUser.current().getName()){
                                     Log.d("Receiver PASS", rec);
                                     Log.d("Sender PASS", send);
