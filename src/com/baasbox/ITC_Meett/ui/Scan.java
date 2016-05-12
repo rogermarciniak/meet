@@ -4,10 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,8 +54,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     private String mLongitudeText;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
-
-
+    final Button scanButton = (Button) findViewById(R.id.buttonbutton);
 
 
     @Override
@@ -66,14 +68,16 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .addApi(LocationServices.API)
                 .build();
 
-
-
+        scanButton.setEnabled(false);
+        isGPSEnabled();
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         matchList.setAdapter(adapter);
 
-        final Button scanButton = (Button) findViewById(R.id.buttonbutton);
+
+
+
         if (scanButton != null) {
             scanButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,6 +163,27 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    private void isGPSEnabled(){
+
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
+        boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(statusOfGPS){
+            scanButton.setEnabled(true);
+        }else{
+            AlertDialog.Builder dialog = new AlertDialog.Builder(niewiem);
+            dialog.setMessage("Enable GPS Location Service");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    niewiem.startActivityForResult(myIntent,100);
+                }
+            });
+            isGPSEnabled();
+        }
     }
 
     public void scanForMatches(){
