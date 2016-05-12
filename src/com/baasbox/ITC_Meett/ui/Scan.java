@@ -69,8 +69,9 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .build();
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
-        scanButton.setEnabled(false);
-        isGPSEnabled(scanButton);
+        scanButton.setEnabled(true);
+       // scanButton.setEnabled(false);
+       // isGPSEnabled(scanButton);
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
