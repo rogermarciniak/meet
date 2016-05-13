@@ -41,6 +41,7 @@ import com.google.android.gms.location.LocationServices;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -229,11 +230,19 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                             matchLocation.setLatitude(Double.parseDouble(lati));
                             matchLocation.setLongitude(Double.parseDouble(longi));
 
-                            float distance = (myLocation.distanceTo(matchLocation)) / 1000;
-
+                            float distance = (myLocation.distanceTo(matchLocation));
+                            String distanceStr = "location not found";
                             Log.d("Pass", userName);
 
-                            String finalOutPut = userName + " " + distance;
+                            if (distance < 10.0) {distanceStr = "~Wow, less than 10m away!";}
+                            else if (distance < 50.0){distanceStr = "~less than 50m away!";}
+                            else{
+
+                                int distance2 = Math.round(distance);
+                                distanceStr = Integer.toString(distance2) + "m away!";
+                            }
+
+                            String finalOutPut = userName + " " + distanceStr;
                             arrayList.add(finalOutPut);
                             adapter.notifyDataSetChanged();
                         }
