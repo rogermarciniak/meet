@@ -96,7 +96,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(1000);
+                                Thread.sleep(5000);
                             } catch (InterruptedException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
@@ -131,6 +131,14 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
                     Toast toast = Toast.makeText(context, userName, duration);
                     toast.show();
+
+                    Intent intent = new Intent(view.getContext(), MatchView.class);
+                    intent.putExtra("matchedId", userName);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+
+
                 }
 
             }});
@@ -190,7 +198,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000";
+        String whereString = "distance(Latitude,Longitude," + "52.6803972" + "," + "-7.0273629" + ") < 50000";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
