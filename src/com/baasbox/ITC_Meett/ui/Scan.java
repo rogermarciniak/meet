@@ -234,12 +234,12 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                             String distanceStr = "location not found";
                             Log.d("Pass", userName);
 
-                            if (distance < 10.0) {distanceStr = "     ~Wow, less than 10m away!";}
-                            else if (distance < 50.0){distanceStr = "     ~less than 50m away!";}
+                            if (distance < 10.0) {distanceStr = "~Wow, less than 10m away!";}
+                            else if (distance < 50.0){distanceStr = "~less than 50m away!";}
                             else{
 
                                 int distance2 = Math.round(distance);
-                                distanceStr = "     ~" + Integer.toString(distance2) + "m away!";
+                                distanceStr = Integer.toString(distance2) + "m away!";
                             }
 
                             String finalOutPut = userName + " " + distanceStr;
