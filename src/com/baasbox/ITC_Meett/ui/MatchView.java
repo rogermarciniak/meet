@@ -128,6 +128,7 @@ public class MatchView extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         String pkgn = getIntent().getExtras().getString("matchedId");
+        pkgn.substring(0, pkgn.indexOf(" "));
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
                 .where("_author='" + pkgn + "'")
