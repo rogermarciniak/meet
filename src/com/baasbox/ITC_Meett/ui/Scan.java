@@ -215,28 +215,28 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         String lati = doc.get("Latitude");
                         String longi = doc.get("Longitude");
 
-                        Location myLocation = new Location("point A");
+                        if(userName == BaasUser.current().getName()){
 
-                        myLocation.setLatitude(52.6803972);
-                        myLocation.setLongitude(-7.0273629);
+                        }
+                        else{
+                            Location myLocation = new Location("point A");
 
-                        Location matchLocation = new Location("point B");
+                            myLocation.setLatitude(52.6803972);
+                            myLocation.setLongitude(-7.0273629);
 
-                        matchLocation.setLatitude(Double.parseDouble(lati));
-                        matchLocation.setLongitude(Double.parseDouble(longi));
+                            Location matchLocation = new Location("point B");
 
-                        float distance = (myLocation.distanceTo(matchLocation));
-                        String distanceStr = "location not found";
+                            matchLocation.setLatitude(Double.parseDouble(lati));
+                            matchLocation.setLongitude(Double.parseDouble(longi));
 
-                        Log.d("Pass", userName);
+                            float distance = (myLocation.distanceTo(matchLocation)) / 1000;
 
-                        if (distance < 10.0) {distanceStr = "~Wow, less than 5 metres!";}
-                        else if (distance < 50.0){}
+                            Log.d("Pass", userName);
 
-
-                        String finalOutPut = userName + " " + distance;
-                        arrayList.add(finalOutPut);
-                        adapter.notifyDataSetChanged();
+                            String finalOutPut = userName + " " + distance;
+                            arrayList.add(finalOutPut);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 } else {
                     arrayList.add("list error");
