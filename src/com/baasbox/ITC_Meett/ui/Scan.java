@@ -225,9 +225,14 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         matchLocation.setLatitude(Double.parseDouble(lati));
                         matchLocation.setLongitude(Double.parseDouble(longi));
 
-                        float distance = (myLocation.distanceTo(matchLocation)) / 1000;
+                        float distance = (myLocation.distanceTo(matchLocation));
+                        String distanceStr = "location not found";
 
                         Log.d("Pass", userName);
+
+                        if (distance < 10.0) {distanceStr = "~Wow, less than 5 metres!";}
+                        else if (distance < 50.0){}
+
 
                         String finalOutPut = userName + " " + distance;
                         arrayList.add(finalOutPut);
