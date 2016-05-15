@@ -51,13 +51,14 @@ public class Chat extends AppCompatActivity {
         final String matchedUser = pkgn;
         Log.d("UserName", matchedUser);
 
+        chat.setAdapter(adapter);
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
 
             @Override
             public void run() {
-
+                arrayList.clear();
                 BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
@@ -71,12 +72,12 @@ public class Chat extends AppCompatActivity {
                                 Log.d("2", rec);
                                 Log.d("3", mess);
                                 Log.d("user", BaasUser.current().getName());
-
+                                Log.d("Panie", arrayList.toString());
 
                                 // arrayList.add(doc.getString("Message"));
-                                adapter.notifyDataSetChanged();
+                               // adapter.notifyDataSetChanged();
 
-                                if (BaasUser.current().getName() == doc.getString("Receiver")) {
+                                if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
                                     arrayList.add(doc.getString("Sender"));
                                     arrayList.add(mess);
                                     adapter.notifyDataSetChanged();
@@ -91,8 +92,6 @@ public class Chat extends AppCompatActivity {
             }
         }, 0, 5, TimeUnit.SECONDS);
 
-
-        chat.setAdapter(adapter);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +108,7 @@ public class Chat extends AppCompatActivity {
                     doc.put("Date", currentDate)
                             .put("Sender", BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
                             .put("Receiver", pkgn)
-                            .put("Message", arrayList.toString());
+                            .put("Message", newString);
                     doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
                         @Override
                         public void handle(BaasResult<BaasDocument> res) {
