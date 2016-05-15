@@ -58,7 +58,7 @@ public class Chat extends AppCompatActivity {
 
             @Override
             public void run() {
-                arrayList.clear();
+               // arrayList.clear();
                 BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
@@ -81,6 +81,22 @@ public class Chat extends AppCompatActivity {
                                     arrayList.add(doc.getString("Sender"));
                                     arrayList.add(mess);
                                     adapter.notifyDataSetChanged();
+
+
+
+
+                                    doc.delete(new BaasHandler<Void>() {
+                                        @Override
+                                        public void handle(BaasResult<Void> res) {
+                                            if (res.isSuccess()) {
+                                                Log.d("LOG", "Document deleted");
+                                            } else {
+                                                Log.e("LOG", "error", res.error());
+                                            }
+                                        }
+                                    });
+
+
                                 } else {
                                     Log.e("ERROR", "NIE WIEM");
                                 }
