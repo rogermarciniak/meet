@@ -71,8 +71,8 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
         scanButton.setEnabled(true);
-       // scanButton.setEnabled(false);
-       // isGPSEnabled(scanButton);
+        // scanButton.setEnabled(false);
+        // isGPSEnabled(scanButton);
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -124,17 +124,17 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 {
                     String chosen = matchList.getItemAtPosition(position).toString();
-                    String userName = chosen.substring(0, chosen.lastIndexOf(" "));
-                    Log.e("UN", userName);
+                    String userNamee = chosen.substring(0, chosen.indexOf(" "));
+                    Log.e("UN", userNamee);
 
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_LONG;
 
-                    Toast toast = Toast.makeText(context, userName, duration);
+                    Toast toast = Toast.makeText(context, userNamee, duration);
                     toast.show();
 
                     Intent intent = new Intent(view.getContext(), MatchView.class);
-                    intent.putExtra("matchedId", userName);
+                    intent.putExtra("userName", userNamee);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
@@ -242,7 +242,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                                 distanceStr = Integer.toString(distance2) + "m away!";
                             }
 
-                            String finalOutPut = userName + " " + distanceStr;
+                            String finalOutPut = userName + "  " + distanceStr;
                             arrayList.add(finalOutPut);
                             adapter.notifyDataSetChanged();
                         }

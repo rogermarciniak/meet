@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Chat extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
@@ -39,57 +42,55 @@ public class Chat extends AppCompatActivity {
         final ListView chat = (ListView) findViewById(R.id.chatList);
         final Button send = (Button) findViewById(R.id.sentButton);
 
+        final String pkgn = getIntent().getExtras().getString("userName");
+        //final String newUserName = pkgn.substring(0, pkgn.indexOf(" "));
+
         arrayList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
 
-        final String matchedUser = "test1";
-        BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
+        final String matchedUser = pkgn;
+        Log.d("UserName", matchedUser);
+
+
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(new Runnable() {
+
             @Override
-            public void handle(BaasResult<List<BaasDocument>> res) {
-                if (res.isSuccess()) {
-                    for (BaasDocument doc : res.value()) {
-                        String rec = doc.getString("Receiver");
-                        String send = doc.getString("Sender");
-                        String mess = doc.getString("Message");
-                        Log.d("STRINGS", send);
-                        Log.d("MATCHED", matchedUser);
-                        Log.d("2", rec);
-                        Log.d("3", mess);
-                        Log.d("user", BaasUser.current().getName());
+            public void run() {
 
-                        arrayList.add(doc.getString("Receiver"));
-                        arrayList.add(doc.getString("Message"));
-                        adapter.notifyDataSetChanged();
-                        chat.invalidateViews();
+                BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
+                    @Override
+                    public void handle(BaasResult<List<BaasDocument>> res) {
+                        if (res.isSuccess()) {
+                            for (BaasDocument doc : res.value()) {
+                                String rec = doc.getString("Receiver");
+                                String send = doc.getString("Sender");
+                                String mess = doc.getString("Message");
+                                Log.d("STRINGS", send);
+                                Log.d("MATCHED", matchedUser);
+                                Log.d("2", rec);
+                                Log.d("3", mess);
+                                Log.d("user", BaasUser.current().getName());
 
-                        if (BaasUser.current().getName() == doc.getString("Receiver")) {
 
-                            arrayList.add(doc.getString("Message"));
-                            adapter.notifyDataSetChanged();
-                            chat.invalidateViews();
-                        } else {
-                            Log.e("ERROR", "NIE WIEM");
+                                // arrayList.add(doc.getString("Message"));
+                                adapter.notifyDataSetChanged();
+
+                                if (BaasUser.current().getName() == doc.getString("Receiver")) {
+                                    arrayList.add(doc.getString("Sender"));
+                                    arrayList.add(mess);
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    Log.e("ERROR", "NIE WIEM");
+                                }
+                            }
                         }
-                          /*     if (doc.getString("Receiver") == BaasUser.current().getName()){
-                                    Log.d("Receiver PASS", rec);
-                                    Log.d("Sender PASS", send);
-                                    arrayList.add(doc.getString("Message"));
-                                    adapter.notifyDataSetChanged();
-                                    chat.invalidateViews();
-                                        Log.d("LOG", "Doc: " + doc);
-                                    break;
-                                }
-                                else{
-                                    arrayList.add("Cos sie zjebalo");
-                                    adapter.notifyDataSetChanged();
-                                    chat.invalidateViews();
-                                }
-*/
-
                     }
-                }
+                });
+
             }
-        });
+        }, 0, 5, TimeUnit.SECONDS);
+
 
         chat.setAdapter(adapter);
 
@@ -107,9 +108,9 @@ public class Chat extends AppCompatActivity {
                     BaasDocument doc = new BaasDocument("ChatLog");
                     doc.put("Date", currentDate)
                             .put("Sender", BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
-                            .put("Receiver", "test1")
-                            .put("Message", newString);
-                    doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ), new BaasHandler<BaasDocument>() {
+                            .put("Receiver", pkgn)
+                            .put("Message", arrayList.toString());
+                    doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
                         @Override
                         public void handle(BaasResult<BaasDocument> res) {
                             if (res.isSuccess()) {

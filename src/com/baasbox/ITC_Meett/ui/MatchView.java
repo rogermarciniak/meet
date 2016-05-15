@@ -121,14 +121,20 @@ public class MatchView extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    void onChat(String userName){
+        Intent intent = new Intent(this,Chat.class);
+        intent.putExtra("userName", userName);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_match_view);
+        final String pkgn = getIntent().getExtras().getString("userName");
 
-        String pkgn = getIntent().getExtras().getString("matchedId");
-        pkgn = pkgn.substring(0, pkgn.indexOf(" "));
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
                 .where("_author='" + pkgn + "'")
@@ -140,7 +146,7 @@ public class MatchView extends AppCompatActivity {
                 if (res.isSuccess()) {
                     for (BaasFile doc : res.value()) {
                         Log.d("Pass", doc.getStreamUri().toString());
-                        new DownloadImageTask((ImageButton) findViewById(R.id.imageButton))
+                        new DownloadImageTask((ImageButton) findViewById(R.id.profPic))
                                 .execute(doc.getStreamUri().toString());
 
                         break;
@@ -159,12 +165,10 @@ public class MatchView extends AppCompatActivity {
         final TextView inte1 = (TextView) findViewById(R.id.textView5);
         final TextView inte2 = (TextView) findViewById(R.id.textView6);
         final TextView inte3 = (TextView) findViewById(R.id.textView7);
-        final Button inte4 = (Button) findViewById(R.id.mess);
-
 
         BaasQuery.Criteria filter2 = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
-                .where("_author='" + pkgn + "'")
+                .where("_author='" + BaasUser.current().getName() + "'")
                 .criteria();
 
 
@@ -190,9 +194,86 @@ public class MatchView extends AppCompatActivity {
                     }
                 });
         final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);
+        final Button chatBtn = (Button) findViewById(R.id.sendMessageButton);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onChat(pkgn);
+            }
 
+        });
+     /*   pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int PICK_IMAGE_REQUEST = 1;
+                req.setValue(1);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+            }
+
+        });
     }
+    @Override
+    protected void onActivityResult(final int requestCode,final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Main Activity", "On Activity Result");
 
+
+
+        try {
+            Uri selectedImage=null;
+            if (requestCode == req.getValue() && resultCode == RESULT_OK && null != data) {
+                Log.d("Main Activity", "Gallery");
+                selectedImage = data.getData();
+            }
+
+            if(selectedImage==null)
+            {
+                Log.d("Main Activity", "Back");
+                return;
+            }
+
+            Log.d("Main Activity","Out");
+            String[] filePathColumn = {MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            Log.d("Main Activity",picturePath);
+            cursor.close();
+            Bitmap bmp=BitmapFactory.decodeFile(picturePath);
+            Bitmap resized = Bitmap.createScaledBitmap(bmp, 250, 250, true);
+            final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);
+            pic.setImageBitmap(resized);
+
+            clearDB();
+            //raz raz
+
+            File imgToUpload = new File(picturePath);
+            BaasFile baasFile = new BaasFile();
+            baasFile.upload(BaasACL.grantRole(Role.REGISTERED, Grant.READ), imgToUpload, new BaasHandler<BaasFile>() {
+                @Override
+                public void handle(BaasResult<BaasFile> baasResult) {
+                    if (baasResult.isSuccess()) {
+                        Log.d("Main","file successfully uploaded");
+                        //...
+                    } else {
+                        Log.e("Main", "error in uploading file: " + baasResult.error());
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            Log.d("Main Activity", "Exception");
+            //req.setValue(0);
+        }
+
+*/
+    }
 
     @Override
     public void onBackPressed() {
