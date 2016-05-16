@@ -123,12 +123,7 @@ public class MainScreen extends AppCompatActivity {
                 onScan();
             }
         });
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onChat();
-            }
-        });
+
         final int code = 1;
         Intent notificationIntent = new Intent(this, MainScreen.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
