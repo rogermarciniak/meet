@@ -55,6 +55,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     private String mLongitudeText;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
+    AlertDialog.Builder builder;
 
 
 
@@ -70,9 +71,9 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .build();
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
-        scanButton.setEnabled(true);
-        // scanButton.setEnabled(false);
-        // isGPSEnabled(scanButton);
+
+        //scanButton.setEnabled(false);
+        //isGPSEnabled(scanButton);
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -123,17 +124,17 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 {
                     String chosen = matchList.getItemAtPosition(position).toString();
-                    String userNamee = chosen.substring(0, chosen.indexOf(" "));
-                    Log.e("UN", userNamee);
+                    String username = chosen.substring(0, chosen.indexOf(" "));
+                    Log.e("UN", username);
 
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_LONG;
 
-                    Toast toast = Toast.makeText(context, userNamee, duration);
+                    Toast toast = Toast.makeText(context, username, duration);
                     toast.show();
 
                     Intent intent = new Intent(view.getContext(), MatchView.class);
-                    intent.putExtra("userName", userNamee);
+                    intent.putExtra("userName", username);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
@@ -179,21 +180,19 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
         boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(statusOfGPS){
-            scanButton.setEnabled(true);
-        }else{
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage("Enable GPS Location Service");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    Scan.this.startActivityForResult(myIntent,100);
-                }
-            });
+        if(!statusOfGPS){
+            new AlertDialog.Builder(Scan.this)
+                    .setTitle("Location Problem")
+                    .setMessage("Please enable GPS Location service")
+                    .setCancelable(false)
+                    .setPositiveButton("Turn on GPS", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    }).create().show();
             isGPSEnabled(scanButton);
-        }
+        }else{scanButton.setEnabled(true);}
     }
 
     public void scanForMatches(){
