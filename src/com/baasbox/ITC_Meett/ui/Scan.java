@@ -71,9 +71,9 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .build();
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
-
-        scanButton.setEnabled(false);
-        isGPSEnabled(scanButton);
+        scanButton.setEnabled(true);
+        // scanButton.setEnabled(false);
+        // isGPSEnabled(scanButton);
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -181,14 +181,21 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
         boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(!statusOfGPS){
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_LONG;
-
-            Toast toast = Toast.makeText(context, "Please enable GPS", duration);
-            toast.show();
+        if(statusOfGPS){
+            scanButton.setEnabled(true);
+        }else{
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage("Enable GPS Location Service");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    Scan.this.startActivityForResult(myIntent,100);
+                }
+            });
             isGPSEnabled(scanButton);
-        }else{scanButton.setEnabled(true);}
+        }
     }
 
     public void scanForMatches(){
