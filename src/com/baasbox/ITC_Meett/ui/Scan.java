@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -55,7 +56,6 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
     private String mLongitudeText;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
-    AlertDialog.Builder builder;
 
 
 
@@ -71,9 +71,9 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                 .build();
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
-
-        //scanButton.setEnabled(false);
-        //isGPSEnabled(scanButton);
+        scanButton.setEnabled(true);
+        // scanButton.setEnabled(false);
+        // isGPSEnabled(scanButton);
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
@@ -100,6 +100,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                             try {
                                 Thread.sleep(5000);
                             } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
 
@@ -124,17 +125,17 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 {
                     String chosen = matchList.getItemAtPosition(position).toString();
-                    String username = chosen.substring(0, chosen.indexOf(" "));
-                    Log.e("UN", username);
+                    String userNamee = chosen.substring(0, chosen.indexOf(" "));
+                    Log.e("UN", userNamee);
 
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_LONG;
 
-                    Toast toast = Toast.makeText(context, username, duration);
+                    Toast toast = Toast.makeText(context, userNamee, duration);
                     toast.show();
 
                     Intent intent = new Intent(view.getContext(), MatchView.class);
-                    intent.putExtra("userName", username);
+                    intent.putExtra("userName", userNamee);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
@@ -180,24 +181,26 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
         boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(!statusOfGPS){
-            new AlertDialog.Builder(Scan.this)
-                    .setTitle("Location Problem")
-                    .setMessage("Please enable GPS Location service")
-                    .setCancelable(false)
-                    .setPositiveButton("Turn on GPS", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        }
-                    }).create().show();
+        if(statusOfGPS){
+            scanButton.setEnabled(true);
+        }else{
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage("Enable GPS Location Service");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    Scan.this.startActivityForResult(myIntent,100);
+                }
+            });
             isGPSEnabled(scanButton);
-        }else{scanButton.setEnabled(true);}
+        }
     }
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000"; // todo: change to 1km;
+        String whereString = "distance(Latitude,Longitude," + "52.6803972" + "," + "-7.0273629" + ") < 50000";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
@@ -214,17 +217,23 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         String lati = doc.get("Latitude");
                         String longi = doc.get("Longitude");
 
-                        if(userName != BaasUser.current().getName()){
+                        if(userName == BaasUser.current().getName()){
+
+                        }
+                        else{
+                            int matchedInterests = 0;
                             Location myLocation = new Location("point A");
-                            myLocation.setLatitude(Double.parseDouble(mLatitudeText));
-                            myLocation.setLongitude(Double.parseDouble(mLongitudeText));
+
+                            myLocation.setLatitude(52.6803972);
+                            myLocation.setLongitude(-7.0273629);
 
                             Location matchLocation = new Location("point B");
+
                             matchLocation.setLatitude(Double.parseDouble(lati));
                             matchLocation.setLongitude(Double.parseDouble(longi));
 
                             float distance = (myLocation.distanceTo(matchLocation));
-                            String distanceStr;
+                            String distanceStr = "location not found";
                             Log.d("Pass", userName);
 
                             if (distance < 10.0) {distanceStr = "~Wow, less than 10m away!";}
@@ -234,21 +243,80 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                                 int distance2 = Math.round(distance);
                                 distanceStr = Integer.toString(distance2) + "m away!";
                             }
+                            final ArrayList<String> matchPref = new ArrayList<String>();
+                            final ArrayList<String> myPref = new ArrayList<String>();
+                            BaasQuery.Criteria filter2 = BaasQuery.builder().pagination(0, 20)
+                                    .orderBy("_creation_date desc")
+                                    .where("_author='" + userName + "'")
+                                    .criteria();
 
-                            String finalOutput= userName + "  " + distanceStr;
-                            arrayList.add(finalOutput);
-                            adapter.notifyDataSetChanged();
+
+                            BaasDocument.fetchAll("Preferences", filter2,
+                                    new BaasHandler<List<BaasDocument>>() {
+                                        @Override
+                                        public void handle(BaasResult<List<BaasDocument>> res) {
+                                            if (res.isSuccess()) {
+                                                int count = 0;
+                                                for (BaasDocument doc : res.value()) {
+                                                    String pref = doc.getString("Interests");
+                                                    String[] parts = pref.split(",");
+                                                    Collections.addAll(matchPref, parts);
+                                                }
+
+
+                                            } else {
+                                            }
+                                        }
+                                    });
+
+                            BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
+                                    .orderBy("_creation_date desc")
+                                    .where("_author='" + BaasUser.current().getName() + "'")
+                                    .criteria();
+
+
+                            BaasDocument.fetchAll("Preferences", filter,
+                                    new BaasHandler<List<BaasDocument>>() {
+                                        @Override
+                                        public void handle(BaasResult<List<BaasDocument>> res) {
+                                            if (res.isSuccess()) {
+                                                int count = 0;
+                                                for (BaasDocument doc : res.value()) {
+                                                    String pref = doc.getString("Interests");
+                                                    String[] parts = pref.split(",");
+                                                    Collections.addAll(myPref, parts);
+                                                }
+
+
+                                            } else {
+                                            }
+                                        }
+                                    });
+
+                            for(int i = 0; i < myPref.size()-1; i++){
+                                if(myPref.get(i) == matchPref.get(i)){
+                                    matchedInterests ++;
+                                }
+                            }
+
+                            if(matchedInterests > 1){
+                                String finalOutPut = userName + "  " + distanceStr;
+                                arrayList.add(finalOutPut);
+                                adapter.notifyDataSetChanged();
+                            }
 
                         }
                     }
                 } else {
-                    arrayList.add("list fetch error");
+                    arrayList.add("list error");
                     adapter.notifyDataSetChanged();
                 }
             }
         });
 
     }
+
+
 
     public void setMyLocation(){
 

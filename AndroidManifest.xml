@@ -31,19 +31,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.NotesDetailsActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".ui.NoteListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.baasbox.ITC_Meett.ui.NoteListActivity" />
-        </activity>
-        <activity
             android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
-        <activity
-            android:name=".ui.EditActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".ui.Series"
@@ -71,7 +60,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.MainScreen" />
         <!-- <activity android:name=".ui.Scan"></activity> -->
-        <activity android:name=".ui.Matchedd" />
     </application>
 
 </manifest>
