@@ -181,21 +181,19 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
         boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(statusOfGPS){
-            scanButton.setEnabled(true);
-        }else{
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage("Enable GPS Location Service");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    Scan.this.startActivityForResult(myIntent,100);
-                }
-            });
+        if(!statusOfGPS){
+            new AlertDialog.Builder(Scan.this)
+                    .setTitle("Location Problem")
+                    .setMessage("Please enable GPS Location service")
+                    .setCancelable(false)
+                    .setPositiveButton("Turn on GPS", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    }).create().show();
             isGPSEnabled(scanButton);
-        }
+        }else{scanButton.setEnabled(true);}
     }
 
     public void scanForMatches(){
