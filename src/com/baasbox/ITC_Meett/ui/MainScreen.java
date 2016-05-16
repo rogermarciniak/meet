@@ -1,15 +1,9 @@
 package com.baasbox.ITC_Meett.ui;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -95,9 +89,9 @@ public class MainScreen extends AppCompatActivity {
         final Button series = (Button) findViewById(R.id.button3);
         final Button logout = (Button) findViewById(R.id.button4);
         final Button scan = (Button) findViewById(R.id.button5);
-        final Button chat = (Button) findViewById(R.id.button6);
+
         final ImageButton notif = (ImageButton) findViewById(R.id.messageTracker);
-        notif.setBackgroundResource(R.drawable.yes);
+        notif.setBackgroundResource(R.drawable.msg_off);
         notif.setEnabled(false);
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -124,12 +118,6 @@ public class MainScreen extends AppCompatActivity {
                 onScan();
             }
         });
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onChat();
-            }
-        });
         final int code = 1;
         Intent notificationIntent = new Intent(this, MainScreen.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
@@ -152,7 +140,7 @@ public class MainScreen extends AppCompatActivity {
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
-                                    notif.setBackgroundResource(R.drawable.no);
+                                    notif.setBackgroundResource(R.drawable.msg_live);
                                     notif.setEnabled(true);
 
                                 } else {
