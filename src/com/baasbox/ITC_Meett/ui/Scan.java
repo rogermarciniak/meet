@@ -99,7 +99,6 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                             try {
                                 Thread.sleep(5000);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
 
@@ -199,7 +198,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + "52.6803972" + "," + "-7.0273629" + ") < 50000";
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000"; // todo: change to 1km;
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
@@ -216,22 +215,17 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         String lati = doc.get("Latitude");
                         String longi = doc.get("Longitude");
 
-                        if(userName == BaasUser.current().getName()){
-
-                        }
-                        else{
+                        if(userName != BaasUser.current().getName()){
                             Location myLocation = new Location("point A");
-
-                            myLocation.setLatitude(52.6803972);
-                            myLocation.setLongitude(-7.0273629);
+                            myLocation.setLatitude(Double.parseDouble(mLatitudeText));
+                            myLocation.setLongitude(Double.parseDouble(mLongitudeText));
 
                             Location matchLocation = new Location("point B");
-
                             matchLocation.setLatitude(Double.parseDouble(lati));
                             matchLocation.setLongitude(Double.parseDouble(longi));
 
                             float distance = (myLocation.distanceTo(matchLocation));
-                            String distanceStr = "location not found";
+                            String distanceStr;
                             Log.d("Pass", userName);
 
                             if (distance < 10.0) {distanceStr = "~Wow, less than 10m away!";}
@@ -242,21 +236,20 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                                 distanceStr = Integer.toString(distance2) + "m away!";
                             }
 
-                            String finalOutPut = userName + "  " + distanceStr;
-                            arrayList.add(finalOutPut);
+                            String finalOutput= userName + "  " + distanceStr;
+                            arrayList.add(finalOutput);
                             adapter.notifyDataSetChanged();
+
                         }
                     }
                 } else {
-                    arrayList.add("list error");
+                    arrayList.add("list fetch error");
                     adapter.notifyDataSetChanged();
                 }
             }
         });
 
     }
-
-
 
     public void setMyLocation(){
 
