@@ -97,7 +97,7 @@ public class MainScreen extends AppCompatActivity {
         final Button logout = (Button) findViewById(R.id.button4);
         final Button scan = (Button) findViewById(R.id.button5);
         final ImageButton notif = (ImageButton) findViewById(R.id.messageTracker);
-        notif.setBackgroundResource(R.drawable.yes);
+        notif.setBackgroundResource(R.drawable.msg_off);
         notif.setEnabled(false);
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +147,7 @@ public class MainScreen extends AppCompatActivity {
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
-                                    notif.setBackgroundResource(R.drawable.no);
+                                    notif.setBackgroundResource(R.drawable.msg_live);
                                     notif.setEnabled(true);
 
                                 } else {
