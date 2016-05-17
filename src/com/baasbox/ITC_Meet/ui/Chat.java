@@ -39,6 +39,19 @@ public class Chat extends Activity {
     private ArrayList<String> arrayList;
 
 
+    public class MyInt {
+        private int value;
+        public MyInt(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            return value;
+        }
+        public void setValue(int value) {
+            this.value = value;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,42 +124,50 @@ public class Chat extends Activity {
                 scheduler.shutdown();
             }
         }, 0, 5, TimeUnit.SECONDS);
-
+        final MyInt count = new MyInt(0);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View c) {
                 if (send.isPressed()) {
 
-                    String currentDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                    if (count.getValue() < 6) {
+                        String currentDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                    String newString = BaasUser.current().getName()+ ": " + txt.getText().toString();
-                    String myMsg = txt.getText().toString();
-                    arrayList.add(newString);
+                        String newString = BaasUser.current().getName() + ": " + txt.getText().toString();
+                        String myMsg = txt.getText().toString();
+                        arrayList.add(newString);
 
 
-                    BaasDocument doc = new BaasDocument("ChatLog");
-                    doc.put("Date", currentDate)
-                            .put("Sender", BaasUser.current().getName())     //NIE TRZEBA toStringa bo to oddaj stringa.
-                            .put("Receiver", pkgn)
-                            .put("Message", myMsg);
-                    doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
-                        @Override
-                        public void handle(BaasResult<BaasDocument> res) {
-                            if (res.isSuccess()) {
-                                Log.d("LOG", "Zapisany: " + res.value());
-                                txt.setText("");
-                                adapter.notifyDataSetChanged();
-                                chat.invalidateViews();
-                            } else {
-                                Log.e("LOG", "Error");
+                        BaasDocument doc = new BaasDocument("ChatLog");
+                        doc.put("Date", currentDate)
+                                .put("Sender", BaasUser.current().getName())     //NIE TRZEBA toStringa bo to oddaj stringa.
+                                .put("Receiver", pkgn)
+                                .put("Message", myMsg);
+                        doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
+                            @Override
+                            public void handle(BaasResult<BaasDocument> res) {
+                                if (res.isSuccess()) {
+                                    Log.d("LOG", "Zapisany: " + res.value());
+                                    txt.setText("");
+                                    adapter.notifyDataSetChanged();
+                                    chat.invalidateViews();
+                                    count.setValue(count.getValue() + 1);
+                                } else {
+                                    Log.e("LOG", "Error");
+                                }
                             }
-                        }
-                    });
+                        });
 
-                } else {
+                    } else {
 
+                    }
                 }
-
+                else{
+                    send.setEnabled(false);
+                    String info = "No more messages can be send. Limit reached(6)";
+                    arrayList.add(info);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 

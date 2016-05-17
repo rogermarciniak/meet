@@ -59,7 +59,8 @@ public class Minigame extends Activity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            Bitmap resized = Bitmap.createScaledBitmap(result, 500, 350, false);
+            bmImage.setImageBitmap(resized);
         }
     }
 
@@ -154,7 +155,7 @@ public class Minigame extends Activity {
         links.add("http://www.roadtogrammar.com/movies/fimls.jpg");
         links.add("http://www.ballingerathleticperformance.com/wp-content/uploads/2012/01/crowie.jpg");
         links.add("http://www.natural-homeremedies.com/fitness/wp-content/uploads/2010/10/Health-Benefits-Of-Swimming.jpg");
-        links.add("http://goodlogo.com/images/logos/ea_sports_logo_3377.gif");
+        links.add("http://blogs.transparent.com/polish/files/2015/09/sports.jpg");
         links.add("http://i-cdn.phonearena.com/images/article/73702-image/The-5-best-smartphones-for-mobile-gaming.jpg");
         links.add("http://s.hswstatic.com/gif/10-best-family-dog-breeds-6.jpg");
         links.add("http://static1.squarespace.com/static/5575eb95e4b08f79780bfb17/5575f0c9e4b04dfb97b3994d/5575f0e9e4b04dfb97b39cf2/1433792832487/tabby-cat-licking-its-lips.png");
@@ -175,7 +176,7 @@ public class Minigame extends Activity {
 
         final MyInt passes = new MyInt(0);
         final MyInt passes2 = new MyInt(0);
-        final int numberOfEntries = links.size()-2;
+        final int numberOfEntries = 3;
 
         int temp = passes.getValue();
         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))

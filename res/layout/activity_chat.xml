@@ -13,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chatBox"
-        android:layout_alignBottom="@+id/sentButton"
-        android:layout_toLeftOf="@+id/sentButton"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/sentButton"
+        android:layout_toStartOf="@+id/sentButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -24,11 +25,11 @@
         android:layout_height="wrap_content"
         android:text="@string/send"
         android:id="@+id/sentButton"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textColor="#FFFFFF"
-        android:background="#4CAF50" />
+        android:background="#4CAF50"
+        android:layout_alignBottom="@+id/chatBox"
+        android:layout_alignRight="@+id/chatList"
+        android:layout_alignEnd="@+id/chatList" />
 
     <ListView
         android:layout_width="wrap_content"
