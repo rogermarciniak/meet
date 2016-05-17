@@ -20,7 +20,7 @@ import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.RequestToken;
-import com.baasbox.ITC_Meet.R;
+import com.baasbox.ITC_Meett.R;
 
 /**
  * @author:

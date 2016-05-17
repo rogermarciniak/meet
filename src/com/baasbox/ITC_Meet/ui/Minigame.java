@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.baasbox.ITC_Meet.R;
+import com.baasbox.ITC_Meett.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasHandler;
@@ -20,6 +20,10 @@ import com.baasbox.android.BaasUser;
 import com.baasbox.android.Grant;
 import com.baasbox.android.Role;
 
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,9 +86,6 @@ public class Minigame extends Activity {
         public void setValue(String value) {
             this.value = value;
         }
-    }
-    void loadURL(){
-
     }
     void clearDB(){
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
@@ -149,7 +150,7 @@ public class Minigame extends Activity {
         final List pref = new ArrayList();
 
         final ArrayList<String> links = new ArrayList<String>();
-       links.add("http://www.klydewarrenpark.org/media/images/Activities/reading.jpg");
+        links.add("http://www.klydewarrenpark.org/media/images/Activities/reading.jpg");
         links.add("http://www.roadtogrammar.com/movies/fimls.jpg");
         links.add("http://www.ballingerathleticperformance.com/wp-content/uploads/2012/01/crowie.jpg");
         links.add("http://www.natural-homeremedies.com/fitness/wp-content/uploads/2010/10/Health-Benefits-Of-Swimming.jpg");
@@ -172,11 +173,9 @@ public class Minigame extends Activity {
 
 
 
-
-
         final MyInt passes = new MyInt(0);
         final MyInt passes2 = new MyInt(0);
-        final int numberOfEntries = 3;
+        final int numberOfEntries = links.size()-2;
 
         int temp = passes.getValue();
         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
@@ -195,12 +194,12 @@ public class Minigame extends Activity {
                     int var = passes2.getValue();
                     if (var <= numberOfEntries - 1) {
                         int temp = passes.getValue();
-                        result.add(preferences.get(temp).toString());
+                        result.add(preferences.get(temp));
                         temp = temp + 2;
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
-                                .execute(links.get(temp).toString());
+                                .execute(links.get(temp));
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
-                                .execute(links.get(temp + 1).toString());
+                                .execute(links.get(temp + 1));
                         passes.setValue(temp);
                     } else {
                         UploadResults(result);
@@ -222,12 +221,12 @@ public class Minigame extends Activity {
                     int var = passes2 .getValue();
                     if(var <= numberOfEntries -1){
                         int temp = passes.getValue();
-                        result.add(preferences.get(temp+1).toString());
+                        result.add(preferences.get(temp+1));
                         temp = temp +2;
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
-                                .execute(links.get(temp).toString());
+                                .execute(links.get(temp));
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
-                                .execute(links.get(temp+1).toString());
+                                .execute(links.get(temp + 1));
                         passes.setValue(temp);
                     }
                     else{
