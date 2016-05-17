@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.os.Handler;
 
 import com.baasbox.ITC_Meett.R;
 import com.baasbox.android.BaasACL;
@@ -43,10 +44,9 @@ public class Chat extends AppCompatActivity {
         final Button send = (Button) findViewById(R.id.sentButton);
 
         final String pkgn = getIntent().getExtras().getString("userName");
-        //final String newUserName = pkgn.substring(0, pkgn.indexOf(" "));
 
         arrayList = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, arrayList);
+        adapter = new ArrayAdapter<String>(Chat.this, android.R.layout.simple_spinner_item, arrayList);
 
         final String matchedUser = pkgn;
         Log.d("UserName", matchedUser);
@@ -58,7 +58,7 @@ public class Chat extends AppCompatActivity {
 
             @Override
             public void run() {
-               // arrayList.clear();
+                // arrayList.clear();
                 BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
@@ -67,22 +67,18 @@ public class Chat extends AppCompatActivity {
                                 String rec = doc.getString("Receiver");
                                 String send = doc.getString("Sender");
                                 String mess = doc.getString("Message");
-                                Log.d("STRINGS", send);
-                                Log.d("MATCHED", matchedUser);
-                                Log.d("2", rec);
-                                Log.d("3", mess);
-                                Log.d("user", BaasUser.current().getName());
+
                                 Log.d("Panie", arrayList.toString());
 
                                 // arrayList.add(doc.getString("Message"));
-                               // adapter.notifyDataSetChanged();
+                                // adapter.notifyDataSetChanged();
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
-                                    arrayList.add(doc.getString("Sender"));
-                                    arrayList.add(mess);
+
+
+                                    String msg = doc.getString("Sender")+": " + mess;
+                                    arrayList.add(msg);
                                     adapter.notifyDataSetChanged();
-
-
 
 
                                     doc.delete(new BaasHandler<Void>() {
@@ -95,7 +91,6 @@ public class Chat extends AppCompatActivity {
                                             }
                                         }
                                     });
-
 
                                 } else {
                                     Log.e("ERROR", "NIE WIEM");
@@ -147,13 +142,15 @@ public class Chat extends AppCompatActivity {
         });
 
 
-        }
+    }
 
-        @Override
+    @Override
     public void onBackPressed() {
+
         Intent intent = new Intent(this,MainScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
+
 }
