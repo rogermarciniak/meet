@@ -41,7 +41,7 @@ public class Chat extends Activity {
     private ArrayList<String> arrayList;
 
 
-    public class MyInt {
+    public class MyInt {                                                    // Function which allows to access inner class variables(INT)
         private int value;
         public MyInt(int value) {
             this.value = value;
@@ -64,7 +64,7 @@ public class Chat extends Activity {
         final ListView chat = (ListView) findViewById(R.id.chatList);
         final Button send = (Button) findViewById(R.id.sentButton);
 
-        final String pkgn = getIntent().getExtras().getString("userName");
+        final String pkgn = getIntent().getExtras().getString("userName");                  //recieve data from previous activity
 
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(Chat.this, android.R.layout.simple_spinner_item, arrayList);
@@ -75,11 +75,11 @@ public class Chat extends Activity {
         chat.setAdapter(adapter);
 
         final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new Runnable() {
+        scheduler.scheduleAtFixedRate(new Runnable() {                                                  // scheduler created to keep track of new messages from other users
 
             @Override
             public void run() {
-                // arrayList.clear();
+
                 BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
@@ -89,10 +89,7 @@ public class Chat extends Activity {
                                 String send = doc.getString("Sender");
                                 String mess = doc.getString("Message");
 
-                                Log.d("Panie", arrayList.toString());
-
-                                // arrayList.add(doc.getString("Message"));
-                                // adapter.notifyDataSetChanged();
+                                Log.d("Message List ", arrayList.toString());
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
@@ -113,21 +110,16 @@ public class Chat extends Activity {
                                         }
                                     });
 
-                                } else {
-                                    Log.e("ERROR", "NIE WIEM");
-                                }
+                                } else {}
                             }
                         }
                     }
                 });
-
-            }
-            public void stop(){
-                scheduler.shutdown();
             }
         }, 0, 5, TimeUnit.SECONDS);
+
         final MyInt count = new MyInt(0);
-        send.setOnClickListener(new View.OnClickListener() {
+        send.setOnClickListener(new View.OnClickListener() {                            //handles messages that are being sent
             @Override
             public void onClick(View c) {
                 if (send.isPressed()) {
@@ -142,14 +134,14 @@ public class Chat extends Activity {
 
                         BaasDocument doc = new BaasDocument("ChatLog");
                         doc.put("Date", currentDate)
-                                .put("Sender", BaasUser.current().getName())     //NIE TRZEBA toStringa bo to oddaj stringa.
+                                .put("Sender", BaasUser.current().getName())
                                 .put("Receiver", pkgn)
                                 .put("Message", myMsg);
                         doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
                             @Override
                             public void handle(BaasResult<BaasDocument> res) {
                                 if (res.isSuccess()) {
-                                    Log.d("LOG", "Zapisany: " + res.value());
+                                    Log.d("LOG", "Saved: " + res.value());
                                     txt.setText("");
                                     adapter.notifyDataSetChanged();
                                     chat.invalidateViews();
@@ -186,12 +178,7 @@ public class Chat extends Activity {
         @Override
     public void onBackPressed() {
 
-        /*   Intent intent = new Intent(this,MainScreen.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            this.finish();
-
-*/         Intent myInent = new Intent(this, Chat.class);
+               Intent myInent = new Intent(this, Chat.class);
             this.stopService(myInent);
             Intent i = getBaseContext().getPackageManager()
                     .getLaunchIntentForPackage(getBaseContext().getPackageName());
@@ -203,14 +190,12 @@ public class Chat extends Activity {
         Log.v("Example", "onResume");
 
         String action = getIntent().getAction();
-        // Prevent endless loop by adding a unique action, don't restart if action is present
+
         if(action == null || !action.equals("Already created")) {
-            Log.v("Example", "Force restart");
             Intent intent = new Intent(this, Chat.class);
             startActivity(intent);
             finish();
         }
-        // Remove the unique action so the next time onResume is called it will restart
         else
             getIntent().setAction(null);
 

@@ -46,30 +46,28 @@ public class MatchView extends Activity {
             this.value = value;
         }
     }
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class LoadImg extends AsyncTask<String, Void, Bitmap> {
         ImageButton bmImage;
 
-        public DownloadImageTask(ImageButton bmImage) {
+        public LoadImg(ImageButton bmImage) {
             this.bmImage = bmImage;
         }
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            Bitmap resizedBitmap = null;
+        protected Bitmap doInBackground(String... uris) {
+            String uri = uris[0];
+            Bitmap myImg = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-                resizedBitmap = Bitmap.createScaledBitmap(mIcon11, 350, 350, false);
+                InputStream inputStream = new java.net.URL(uri).openStream();
+                myImg = BitmapFactory.decodeStream(inputStream);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
-                e.printStackTrace();
             }
-            return resizedBitmap;
+            return myImg;
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            Bitmap resized = Bitmap.createScaledBitmap(result, 500, 350, false);
+            bmImage.setImageBitmap(resized);
         }
     }
     void clearDB(){
@@ -133,7 +131,7 @@ public class MatchView extends Activity {
                 if (res.isSuccess()) {
                     for (BaasFile doc : res.value()) {
                         Log.d("Pass", doc.getStreamUri().toString());
-                        new DownloadImageTask((ImageButton) findViewById(R.id.profPic))
+                        new LoadImg((ImageButton) findViewById(R.id.profPic))
                                 .execute(doc.getStreamUri().toString());
 
                         break;

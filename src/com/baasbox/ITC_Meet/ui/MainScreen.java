@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author:
  * Roger Marciniak (c00169733)
+ * Bartosz Zurawski
  */
 
 public class MainScreen extends Activity {

@@ -38,24 +38,23 @@ import java.util.Locale;
 
 public class Minigame extends Activity {
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class LoadImg extends AsyncTask<String, Void, Bitmap> {
         ImageButton bmImage;
 
-        public DownloadImageTask(ImageButton bmImage) {
+        public LoadImg(ImageButton bmImage) {
             this.bmImage = bmImage;
         }
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
+        protected Bitmap doInBackground(String... uris) {
+            String uri = uris[0];
+            Bitmap myImg = null;
             try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                InputStream inputStream = new java.net.URL(uri).openStream();
+                myImg = BitmapFactory.decodeStream(inputStream);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
-                e.printStackTrace();
             }
-            return mIcon11;
+            return myImg;
         }
 
         protected void onPostExecute(Bitmap result) {
@@ -76,18 +75,7 @@ public class Minigame extends Activity {
             this.value = value;
         }
     }
-    public class MyString {
-        private String value;
-        public MyString(String value) {
-            this.value = value;
-        }
-        public String getValue() {
-            return value;
-        }
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
+
     void clearDB(){
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")
@@ -135,7 +123,7 @@ public class Minigame extends Activity {
                 @Override
                 public void handle(BaasResult<BaasDocument> res) {
                     if (res.isSuccess()) {
-                        Log.d("LOG", "Zapisany: " + res.value());
+                        Log.d("LOG", "Saved: " + res.value());
                     } else {
                         Log.e("LOG", "Error");
                     }
@@ -148,8 +136,6 @@ public class Minigame extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series);
 
-        final List pref = new ArrayList();
-
         final ArrayList<String> links = new ArrayList<String>();
         links.add("http://www.klydewarrenpark.org/media/images/Activities/reading.jpg");
         links.add("http://www.roadtogrammar.com/movies/fimls.jpg");
@@ -159,7 +145,7 @@ public class Minigame extends Activity {
         links.add("http://i-cdn.phonearena.com/images/article/73702-image/The-5-best-smartphones-for-mobile-gaming.jpg");
         links.add("http://s.hswstatic.com/gif/10-best-family-dog-breeds-6.jpg");
         links.add("http://static1.squarespace.com/static/5575eb95e4b08f79780bfb17/5575f0c9e4b04dfb97b3994d/5575f0e9e4b04dfb97b39cf2/1433792832487/tabby-cat-licking-its-lips.png");
-        //links.add("http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg");
+
         final ArrayList<String> preferences = new ArrayList<String>();
         preferences.add("Books");
         preferences.add("Movies");
@@ -169,19 +155,17 @@ public class Minigame extends Activity {
         preferences.add("Gaming");
         preferences.add("Dogs");
         preferences.add("Cats");
+
         final ArrayList<String> result = new ArrayList<String>();
-       // links.add("http://performancecomms.com/wp-content/uploads/2014/02/Putin-Happy.jpg");
-
-
 
         final MyInt passes = new MyInt(0);
         final MyInt passes2 = new MyInt(0);
         final int numberOfEntries = 3;
 
         int temp = passes.getValue();
-        new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
+        new LoadImg((ImageButton) findViewById(R.id.opt1))
                 .execute(links.get(temp));
-        new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
+        new LoadImg((ImageButton) findViewById(R.id.opt2))
                 .execute(links.get(temp + 1));
 
 
@@ -197,9 +181,9 @@ public class Minigame extends Activity {
                         int temp = passes.getValue();
                         result.add(preferences.get(temp));
                         temp = temp + 2;
-                        new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
+                        new LoadImg((ImageButton) findViewById(R.id.opt1))
                                 .execute(links.get(temp));
-                        new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
+                        new LoadImg((ImageButton) findViewById(R.id.opt2))
                                 .execute(links.get(temp + 1));
                         passes.setValue(temp);
                     } else {
@@ -224,9 +208,9 @@ public class Minigame extends Activity {
                         int temp = passes.getValue();
                         result.add(preferences.get(temp+1));
                         temp = temp +2;
-                        new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
+                        new LoadImg((ImageButton) findViewById(R.id.opt1))
                                 .execute(links.get(temp));
-                        new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
+                        new LoadImg((ImageButton) findViewById(R.id.opt2))
                                 .execute(links.get(temp + 1));
                         passes.setValue(temp);
                     }
