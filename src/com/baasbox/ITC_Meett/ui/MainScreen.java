@@ -37,12 +37,23 @@ public class MainScreen extends AppCompatActivity {
 
 
     void notification(){
-        Notification noti = new Notification.Builder(getApplicationContext())
-                .setContentTitle("New Message")
-                .setContentText("test")
-                .setSmallIcon(R.drawable.ic_launcher)
-               // .setLargeIcon(R.drawable.ic_launcher)
-                .build();
+
+        NotificationManager nm = (NotificationManager)getBaseContext().getSystemService(NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(getBaseContext());
+        Intent notificationIntent = new Intent(getBaseContext(), MainScreen.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(getBaseContext(),0,notificationIntent,0);
+
+        //set
+        builder.setContentIntent(contentIntent);
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setContentText("You've received new message from " + send);
+        builder.setContentTitle("New Message");
+        builder.setAutoCancel(true);
+        builder.setDefaults(Notification.DEFAULT_ALL);
+
+        Notification notification = builder.build();
+        nm.notify((int)System.currentTimeMillis(),notification);
+
     }
     void startChat(String userName){
         Intent intent = new Intent(this,Chat.class);
@@ -75,12 +86,6 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    private void onChat(){
-        Intent intent = new Intent(this,Chat.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
 
 
     private RequestToken logoutToken;
@@ -95,15 +100,17 @@ public class MainScreen extends AppCompatActivity {
 
     String send = "";
     String rec = "";
+    int notifC = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen) ;
 
+        getIntent().setAction("Already created");
         final TextView UserName = (TextView) findViewById(R.id.userN);
         UserName.setText(BaasUser.current().getName());
-
+        notifC = 0;
         final Button profile = (Button) findViewById(R.id.button2);
         final Button series = (Button) findViewById(R.id.button3);
         final Button logout = (Button) findViewById(R.id.button4);
@@ -161,9 +168,10 @@ public class MainScreen extends AppCompatActivity {
 
                                     notif.setBackgroundResource(R.drawable.msg_live);
                                     notif.setEnabled(true);
-
-                                    notification();
-
+                                    if (notifC == 0) {
+                                        notification();
+                                        notifC = 1;
+                                    }
                                 } else {
                                     Log.e("ERROR", "NIE WIEM");
                                 }
@@ -187,6 +195,24 @@ public class MainScreen extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    protected void onResume() {
+        Log.v("Example", "onResume");
+
+        String action = getIntent().getAction();
+        // Prevent endless loop by adding a unique action, don't restart if action is present
+        if(action == null || !action.equals("Already created")) {
+            Log.v("Example", "Force restart");
+            Intent intent = new Intent(this, MainScreen.class);
+            startActivity(intent);
+            finish();
+        }
+        // Remove the unique action so the next time onResume is called it will restart
+        else
+            getIntent().setAction(null);
+
+        super.onResume();
     }
 
 }

@@ -217,7 +217,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                         String lati = doc.get("Latitude");
                         String longi = doc.get("Longitude");
 
-                        if(userName == BaasUser.current().getName()){
+                        if(userName.equals(BaasUser.current().getName())){
 
                         }
                         else{

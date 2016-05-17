@@ -73,7 +73,7 @@ public class MatchView extends AppCompatActivity {
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-                resizedBitmap = Bitmap.createScaledBitmap(mIcon11, 250, 250, false);
+                resizedBitmap = Bitmap.createScaledBitmap(mIcon11, 500, 500, false);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();

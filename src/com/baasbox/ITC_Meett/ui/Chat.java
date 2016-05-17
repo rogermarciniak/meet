@@ -34,11 +34,14 @@ import java.util.concurrent.TimeUnit;
 public class Chat extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        getIntent().setAction("Already created");
         final EditText txt = (EditText) findViewById(R.id.chatBox);
         final ListView chat = (ListView) findViewById(R.id.chatList);
         final Button send = (Button) findViewById(R.id.sentButton);
@@ -53,7 +56,7 @@ public class Chat extends AppCompatActivity {
 
         chat.setAdapter(adapter);
 
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
 
             @Override
@@ -76,21 +79,21 @@ public class Chat extends AppCompatActivity {
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
 
-                                            String msg = doc.getString("Sender")+": " + mess;
-                                            arrayList.add(msg);
-                                            adapter.notifyDataSetChanged();
+                                    String msg = doc.getString("Sender") + ": " + mess;
+                                    arrayList.add(msg);
+                                    adapter.notifyDataSetChanged();
 
 
-                                            doc.delete(new BaasHandler<Void>() {
-                                                @Override
-                                                public void handle(BaasResult<Void> res) {
-                                                    if (res.isSuccess()) {
-                                                        Log.d("LOG", "Document deleted");
-                                                    } else {
-                                                        Log.e("LOG", "error", res.error());
-                                                    }
-                                                }
-                                            });
+                                    doc.delete(new BaasHandler<Void>() {
+                                        @Override
+                                        public void handle(BaasResult<Void> res) {
+                                            if (res.isSuccess()) {
+                                                Log.d("LOG", "Document deleted");
+                                            } else {
+                                                Log.e("LOG", "error", res.error());
+                                            }
+                                        }
+                                    });
 
                                 } else {
                                     Log.e("ERROR", "NIE WIEM");
@@ -101,8 +104,10 @@ public class Chat extends AppCompatActivity {
                 });
 
             }
+            public void stop(){
+                scheduler.shutdown();
+            }
         }, 0, 5, TimeUnit.SECONDS);
-
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +117,7 @@ public class Chat extends AppCompatActivity {
                     String currentDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
                     String newString = BaasUser.current().getName()+ ": " + txt.getText().toString();
+                    String myMsg = txt.getText().toString();
                     arrayList.add(newString);
 
 
@@ -119,7 +125,7 @@ public class Chat extends AppCompatActivity {
                     doc.put("Date", currentDate)
                             .put("Sender", BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
                             .put("Receiver", pkgn)
-                            .put("Message", newString);
+                            .put("Message", myMsg);
                     doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {
                         @Override
                         public void handle(BaasResult<BaasDocument> res) {
@@ -147,10 +153,34 @@ public class Chat extends AppCompatActivity {
         @Override
     public void onBackPressed() {
 
-            Intent intent = new Intent(this,MainScreen.class);
+        /*   Intent intent = new Intent(this,MainScreen.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();
-    }
+            this.finish();
 
+*/         Intent myInent = new Intent(this, Chat.class);
+            this.stopService(myInent);
+            Intent i = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+    }
+    @Override
+    protected void onResume() {
+        Log.v("Example", "onResume");
+
+        String action = getIntent().getAction();
+        // Prevent endless loop by adding a unique action, don't restart if action is present
+        if(action == null || !action.equals("Already created")) {
+            Log.v("Example", "Force restart");
+            Intent intent = new Intent(this, Chat.class);
+            startActivity(intent);
+            finish();
+        }
+        // Remove the unique action so the next time onResume is called it will restart
+        else
+            getIntent().setAction(null);
+
+        super.onResume();
+    }
 }
