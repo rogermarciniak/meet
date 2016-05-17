@@ -12,19 +12,7 @@ import com.baasbox.android.*;
  * Roger Marciniak (c00169733)
  * Bartosz Zurawski(c00165634)
  */
-public class NoteListActivity extends Activity{
-    private final static String REFRESH_TOKEN_KEY = "refresh";
-    private final static String SAVING_TOKEN_KEY = "saving";
-    private final static String LOGOUT_TOKEN_KEY = "logout";
-
-    private final static int EDIT_CODE = 1;
-
-    private boolean mUseTwoPane;
-    private RequestToken mRefresh;
-    private RequestToken mSaving;
-
-    private ProgressDialog mDialog;
-    private boolean mDoRefresh=false;
+public class SessionTracker extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +32,7 @@ public class NoteListActivity extends Activity{
 
     }
 
-
     private void startLoginScreen(){
-        mDoRefresh = false;
         Intent intent = new Intent(this,Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

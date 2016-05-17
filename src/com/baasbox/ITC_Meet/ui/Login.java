@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -134,18 +133,18 @@ public class Login extends FragmentActivity {
 
 
     public void attemptLogin(boolean newUser) {
-        // Reset errors.
+        //Reset errors
         mUserView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
+        //Store input
         mUsername = mUserView.getText().toString();
         mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password.
+        //Password rules
         if (TextUtils.isEmpty(mPassword)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
@@ -156,7 +155,7 @@ public class Login extends FragmentActivity {
             cancel = true;
         }
 
-        // Check for a valid email address.
+        //Username rules
         if (TextUtils.isEmpty(mUsername)) {
             mUserView.setError(getString(R.string.error_field_required));
             focusView = mUserView;
@@ -164,12 +163,8 @@ public class Login extends FragmentActivity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
             signupWithBaasBox(newUser);
@@ -201,12 +196,9 @@ public class Login extends FragmentActivity {
                 }
             };
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    @TargetApi(Build.VERSION_CODES.M)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginStatusView.setVisibility(View.VISIBLE);
@@ -231,8 +223,6 @@ public class Login extends FragmentActivity {
                         }
                     });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }

@@ -46,7 +46,7 @@ public class MainScreen extends Activity {
         //set
         builder.setContentIntent(contentIntent);
         builder.setSmallIcon(R.drawable.ic_launcher);
-        builder.setContentText("You've received new message from " + send);
+        builder.setContentText("You've received a new message from " + send);
         builder.setContentTitle("New Message");
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_ALL);
@@ -174,7 +174,7 @@ public class MainScreen extends Activity {
                                         notifC = 1;
                                     }
                                 } else {
-                                    Log.e("ERROR", "NIE WIEM");
+                                    Log.e("ERROR", "Fetching failed!");
                                 }
                             }
                         }
@@ -205,14 +205,14 @@ public class MainScreen extends Activity {
         Log.v("Example", "onResume");
 
         String action = getIntent().getAction();
-        // Prevent endless loop by adding a unique action, don't restart if action is present
+        // Stop endless loop by adding a unique action, no restart
         if(action == null || !action.equals("Already created")) {
             Log.v("Example", "Force restart");
             Intent intent = new Intent(this, MainScreen.class);
             startActivity(intent);
             finish();
         }
-        // Remove the unique action so the next time onResume is called it will restart
+        // Get rid of the unique action, if onResume is called it will restart
         else
             getIntent().setAction(null);
 

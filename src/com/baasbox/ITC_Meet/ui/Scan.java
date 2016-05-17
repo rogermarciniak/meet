@@ -150,17 +150,7 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(Scan.this, "Please enable Location service before scanning!",
-                    Toast.LENGTH_LONG).show();
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-        }
+
     }
 
     @Override
@@ -298,6 +288,11 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
 
     public void setMyLocation(){
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(Scan.this, "Please enable Location service before scanning!",
+                    Toast.LENGTH_LONG).show();
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
