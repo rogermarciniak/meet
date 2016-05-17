@@ -1,6 +1,7 @@
 package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.baasbox.ITC_Meet.R;
@@ -159,14 +161,21 @@ public class Chat extends Activity {
                         });
 
                     } else {
+                        send.setEnabled(false);
+                        txt.setEnabled(false);
+                        txt.setText(" ");
+                        String info = "No more messages can be sent. Limit reached(6)";
+
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, info, duration);
+                        toast.show();
 
                     }
                 }
                 else{
-                    send.setEnabled(false);
-                    String info = "No more messages can be send. Limit reached(6)";
-                    arrayList.add(info);
-                    adapter.notifyDataSetChanged();
+
                 }
             }
         });
