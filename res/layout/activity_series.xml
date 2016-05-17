@@ -12,7 +12,8 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp" />
+        android:layout_marginTop="39dp"
+        android:textColor="#212121" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -35,17 +36,6 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Results"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/opt2"
-        android:layout_alignEnd="@+id/opt2" />
 
 </RelativeLayout>
 

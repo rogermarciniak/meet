@@ -130,7 +130,7 @@ public class Series extends ActionBarActivity {
 
             BaasDocument doc = new BaasDocument("Preferences");
             doc.put("Date", currentDate)
-                    .put("Author",BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
+                    .put("Author",BaasUser.current().getName().toString())
                     .put("Interests", newString);
             doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.READ),new BaasHandler<BaasDocument>() {
                 @Override
