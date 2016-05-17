@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.baasbox.ITC_Meett.ui.LoginActivitySample">
+    tools:context="com.baasbox.ITC_Meett.ui.LoginActivity">
 
     <!-- Login progress -->
     <LinearLayout android:id="@+id/login_status"
@@ -28,7 +28,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
         <LinearLayout style="@style/LoginFormContainer"
             android:orientation="vertical">
@@ -56,13 +57,15 @@
 
 
             <Button android:id="@+id/sign_in_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="128dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Sign in"
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="center_horizontal"
+                android:background="#4CAF50"
+                android:textColor="#FFFFFF" />
 
             <Button android:id="@+id/register_button"
                 android:layout_width="wrap_content"
@@ -71,7 +74,11 @@
                 android:text="Register"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:layout_gravity="right" />
+                android:background="#4CAF50"
+                android:textColor="#FFFFFF"
+                android:elegantTextHeight="false"
+                android:clickable="false"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
