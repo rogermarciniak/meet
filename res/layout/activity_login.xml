@@ -1,6 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.baasbox.ITC_Meett.ui.LoginActivity">
+    tools:context=".ui.Login">
 
     <!-- Login progress -->
     <LinearLayout android:id="@+id/login_status"
@@ -89,7 +89,7 @@
                     android:paddingLeft="32dp"
                     android:paddingRight="32dp"
                     android:layout_gravity="center_horizontal"
-                android:background="#4CAF50"
+                android:background="#CDDC39"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 

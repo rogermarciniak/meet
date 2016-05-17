@@ -1,32 +1,25 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
-import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
@@ -39,15 +32,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * @author:
+ * Roger Marciniak (c00169733)
+ */
 
 public class Scan extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 

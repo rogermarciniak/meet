@@ -1,23 +1,19 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.os.Handler;
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasHandler;
-import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.Grant;
@@ -31,6 +27,11 @@ import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+/**
+ * @author:
+ * Bartosz Zurawski(c00165634)
+ */
 
 public class Chat extends Activity {
     private ArrayAdapter<String> adapter;
@@ -49,8 +50,8 @@ public class Chat extends Activity {
 
         final String pkgn = getIntent().getExtras().getString("userName");
 
-        arrayList = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(Chat.this, android.R.layout.simple_spinner_item, arrayList);
+        arrayList = new ArrayList<>();
+        adapter = new ArrayAdapter<>(Chat.this, android.R.layout.simple_spinner_item, arrayList);
 
         final String matchedUser = pkgn;
         Log.d("UserName", matchedUser);
@@ -124,7 +125,7 @@ public class Chat extends Activity {
 
                     BaasDocument doc = new BaasDocument("ChatLog");
                     doc.put("Date", currentDate)
-                            .put("Sender", BaasUser.current().getName().toString())     //NIE TRZEBA toStringa bo to oddaj stringa.
+                            .put("Sender", BaasUser.current().getName())     //NIE TRZEBA toStringa bo to oddaj stringa.
                             .put("Receiver", pkgn)
                             .put("Message", myMsg);
                     doc.save(BaasACL.grantRole(Role.REGISTERED, Grant.ALL), new BaasHandler<BaasDocument>() {

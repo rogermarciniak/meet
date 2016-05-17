@@ -1,4 +1,4 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
@@ -26,6 +25,11 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+/**
+ * @author:
+ * Roger Marciniak (c00169733)
+ */
 
 public class MainScreen extends Activity {
 
@@ -64,13 +68,13 @@ public class MainScreen extends Activity {
         finish();
     }
     private void onSeries(){
-        Intent intent = new Intent(this,Series.class);
+        Intent intent = new Intent(this,Minigame.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
     private void onLogout(){
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this,Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

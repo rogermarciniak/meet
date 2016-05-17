@@ -1,20 +1,12 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 //import com.baasbox.ITC_Meett.Serie;
 import com.baasbox.android.*;
-import com.baasbox.ITC_Meett.R;
-
-import java.util.List;
 
 /**
  * @authors:
@@ -56,7 +48,7 @@ public class NoteListActivity extends Activity{
 
     private void startLoginScreen(){
         mDoRefresh = false;
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this,Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

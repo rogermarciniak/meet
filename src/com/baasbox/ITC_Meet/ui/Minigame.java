@@ -1,23 +1,18 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
-import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
@@ -25,18 +20,19 @@ import com.baasbox.android.BaasUser;
 import com.baasbox.android.Grant;
 import com.baasbox.android.Role;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Filter;
 
-public class Series extends Activity {
+/**
+ * @author:
+ * Bartosz Zurawski(c00165634)
+ */
+
+public class Minigame extends Activity {
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageButton bmImage;
@@ -208,7 +204,7 @@ public class Series extends Activity {
                         passes.setValue(temp);
                     } else {
                         UploadResults(result);
-                        Intent intent = new Intent(Series.this, MainScreen.class);
+                        Intent intent = new Intent(Minigame.this, MainScreen.class);
                         startActivity(intent);
                         finish();
                     }
@@ -236,7 +232,7 @@ public class Series extends Activity {
                     }
                     else{
                         UploadResults(result);
-                        Intent intent = new Intent(Series.this, MainScreen.class);
+                        Intent intent = new Intent(Minigame.this, MainScreen.class);
                         startActivity(intent);
                         finish();
                     }

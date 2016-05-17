@@ -1,48 +1,33 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.nfc.Tag;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.baasbox.ITC_Meett.R;
-import com.baasbox.android.BaasACL;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasFile;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasQuery;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
-import com.baasbox.android.Grant;
-import com.baasbox.android.Role;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Logger;
+
+/**
+ * @author:
+ * Bartosz Zurawski(c00165634)
+ */
 
 public class MatchView extends Activity {
 
@@ -117,7 +102,7 @@ public class MatchView extends Activity {
         });
     }
     void newActiv(){
-        Intent intent = new Intent(this,Series.class);
+        Intent intent = new Intent(this,Minigame.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
@@ -162,6 +147,7 @@ public class MatchView extends Activity {
 
         final TextView txt1 = (TextView) findViewById(R.id.userName);
         txt1.setText(pkgn);
+        txt1.setTextColor(Color.parseColor("#CDDC39"));
 
         final TextView inte1 = (TextView) findViewById(R.id.textView5);
         final TextView inte2 = (TextView) findViewById(R.id.textView6);

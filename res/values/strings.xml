@@ -23,4 +23,16 @@
     <string name="itc_meet">ITC Meet</string>
     <string name="by_using_itc_meet_you_agree_to_send_location_data">By using ITC Meet you agree to send location data.</string>
     <string name="itc_meet_2016">ITC Meet 2016</string>
+    <string name="interests">Interests</string>
+    <string name="minigame_not_completed_yet">minigame not completed yet</string>
+    <string name="user_name">User name:</string>
+    <string name="send">SEND</string>
+    <string name="find_matches">FIND MATCHES</string>
+    <string name="my_profile">My profile</string>
+    <string name="mini_game">Mini Game</string>
+    <string name="log_out">Log out</string>
+    <string name="logged_in_as">Logged in as:</string>
+    <string name="scan_for_matches">Scan For Matches</string>
+    <string name="chat">CHAT</string>
+    <string name="name">Name</string>
 </resources>

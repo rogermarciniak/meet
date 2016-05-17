@@ -7,12 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.baasbox.ITC_Meett.ui.MainScreen">
+    tools:context="com.baasbox.ITC_Meet.ui.MainScreen">
 
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="My profile"
+        android:text="@string/my_profile"
         android:id="@+id/lProfile"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -24,7 +24,7 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Mini Game"
+        android:text="@string/mini_game"
         android:id="@+id/lSeries"
         android:layout_below="@+id/lProfile"
         android:layout_alignLeft="@+id/lProfile"
@@ -37,7 +37,7 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Log out"
+        android:text="@string/log_out"
         android:id="@+id/lLogout"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/lSeries"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Logged in as: "
+        android:text="@string/logged_in_as"
         android:id="@+id/loggedInAs"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/userN"
@@ -72,7 +72,7 @@
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Scan For Matches"
+        android:text="@string/scan_for_matches"
         android:id="@+id/lScan"
         android:layout_below="@+id/lSeries"
         android:layout_centerHorizontal="true"

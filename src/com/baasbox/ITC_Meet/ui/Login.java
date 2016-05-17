@@ -1,4 +1,4 @@
-package com.baasbox.ITC_Meett.ui;
+package com.baasbox.ITC_Meet.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,14 +20,13 @@ import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.RequestToken;
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 
 /**
  * @author:
  * Roger Marciniak (c00169733)
- * Bartosz Zurawski(c00165634)
  */
-public class LoginActivity extends FragmentActivity {
+public class Login extends FragmentActivity {
     private final static String SIGNUP_TOKEN_KEY = "signup_token_key";
     public static final String EXTRA_USERNAME = "com.baasbox.deardiary.username.EXTRA";
 
