@@ -111,7 +111,7 @@ public class Chat extends AppCompatActivity {
 
                     String currentDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-                    String newString = txt.getText().toString();
+                    String newString = BaasUser.current().getName()+ ": " + txt.getText().toString();
                     arrayList.add(newString);
 
 
