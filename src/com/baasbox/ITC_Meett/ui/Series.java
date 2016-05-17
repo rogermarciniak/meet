@@ -1,5 +1,6 @@
 package com.baasbox.ITC_Meett.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Filter;
 
-public class Series extends ActionBarActivity {
+public class Series extends Activity {
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageButton bmImage;
@@ -191,29 +192,28 @@ public class Series extends ActionBarActivity {
         final ImageButton imgButt1 = (ImageButton) findViewById(R.id.opt1);
         final ImageButton imgButt2 = (ImageButton) findViewById(R.id.opt2);
 
-        imgButt1.setOnClickListener(new View.OnClickListener(){
+        imgButt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View c) {
-                if(imgButt1.isPressed()){
-                    int var = passes2 .getValue();
-                    if(var <= numberOfEntries -1){
+                if (imgButt1.isPressed()) {
+                    int var = passes2.getValue();
+                    if (var <= numberOfEntries - 1) {
                         int temp = passes.getValue();
                         result.add(preferences.get(temp).toString());
-                        temp = temp +2;
+                        temp = temp + 2;
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt1))
                                 .execute(links.get(temp).toString());
                         new DownloadImageTask((ImageButton) findViewById(R.id.opt2))
-                                .execute(links.get(temp+1).toString());
+                                .execute(links.get(temp + 1).toString());
                         passes.setValue(temp);
-                    }
-                    else{
+                    } else {
                         UploadResults(result);
                         Intent intent = new Intent(Series.this, MainScreen.class);
                         startActivity(intent);
                         finish();
                     }
 
-                    var = var +1;
+                    var = var + 1;
                     passes2.setValue(var);
                 }
             }

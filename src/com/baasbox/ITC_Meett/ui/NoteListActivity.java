@@ -1,5 +1,6 @@
 package com.baasbox.ITC_Meett.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.List;
  * Roger Marciniak (c00169733)
  * Bartosz Zurawski(c00165634)
  */
-public class NoteListActivity extends ActionBarActivity{
+public class NoteListActivity extends Activity{
     private final static String REFRESH_TOKEN_KEY = "refresh";
     private final static String SAVING_TOKEN_KEY = "saving";
     private final static String LOGOUT_TOKEN_KEY = "logout";

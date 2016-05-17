@@ -1,5 +1,6 @@
 package com.baasbox.ITC_Meett.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -43,7 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-public class MatchView extends AppCompatActivity {
+public class MatchView extends Activity {
 
     final MyInt req = new MyInt(0);
 

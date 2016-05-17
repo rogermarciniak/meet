@@ -1,5 +1,6 @@
 package com.baasbox.ITC_Meett.ui;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,7 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainScreen extends AppCompatActivity {
+public class MainScreen extends Activity {
 
 
 

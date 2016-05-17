@@ -1,5 +1,6 @@
 package com.baasbox.ITC_Meett.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Chat extends AppCompatActivity {
+public class Chat extends Activity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
 
