@@ -35,7 +35,11 @@ android {
         }
     }
     defaultConfig {
+        applicationId "com.baasbox.ITC_Meet"
+        minSdkVersion 16
+        targetSdkVersion 23
     }
+
     productFlavors {
     }
     dexOptions {

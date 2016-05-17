@@ -1,13 +1,16 @@
 package com.baasbox.ITC_Meet.ui;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +21,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasHandler;
@@ -34,6 +37,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +47,7 @@ import java.util.List;
  * Roger Marciniak (c00169733)
  */
 
-public class Scan extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class Scan extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -51,7 +55,6 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
     private String mLongitudeText;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
-
 
 
     @Override
@@ -67,14 +70,11 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
 
         final Button scanButton = (Button) findViewById(R.id.buttonbutton);
         scanButton.setEnabled(true);
-        // scanButton.setEnabled(false);
-        // isGPSEnabled(scanButton);
+
         final ListView matchList = (ListView) findViewById(R.id.matchList);
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         matchList.setAdapter(adapter);
-
-
 
 
         if (scanButton != null) {
@@ -135,13 +135,12 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
                     startActivity(intent);
 
 
-
                 }
 
-            }});
+            }
+        });
 
     }
-
 
 
     protected void onStart() {
@@ -151,6 +150,11 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(Scan.this, "Please enable Location service before scanning!",
+                    Toast.LENGTH_LONG).show();
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
@@ -170,27 +174,6 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
-    }
-
-    private void isGPSEnabled(Button scanButton){
-
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
-        boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(statusOfGPS){
-            scanButton.setEnabled(true);
-        }else{
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage("Enable GPS Location Service");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("Allow GPS Location", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    Scan.this.startActivityForResult(myIntent,100);
-                }
-            });
-            isGPSEnabled(scanButton);
-        }
     }
 
     public void scanForMatches(){

@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-//import com.baasbox.ITC_Meett.Serie;
 import com.baasbox.android.*;
 
 /**

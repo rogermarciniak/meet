@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
-import com.baasbox.ITC_Meett.R;
+import com.baasbox.ITC_Meet.R;
 import com.baasbox.android.BaasACL;
 import com.baasbox.android.BaasDocument;
 import com.baasbox.android.BaasHandler;
