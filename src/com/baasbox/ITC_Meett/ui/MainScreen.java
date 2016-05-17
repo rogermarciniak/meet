@@ -81,6 +81,7 @@ public class MainScreen extends AppCompatActivity {
                 }
             };
 
+    String send = "";
     String rec = "";
 
     @Override
@@ -141,7 +142,7 @@ public class MainScreen extends AppCompatActivity {
                         if (res.isSuccess()) {
                             for (BaasDocument doc : res.value()) {
                                 rec = doc.getString("Receiver");
-                                String send = doc.getString("Sender");
+                                send = doc.getString("Sender");
                                 String mess = doc.getString("Message");
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
@@ -166,7 +167,7 @@ public class MainScreen extends AppCompatActivity {
         notif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startChat(rec);
+                startChat(send);
             }
 
         });

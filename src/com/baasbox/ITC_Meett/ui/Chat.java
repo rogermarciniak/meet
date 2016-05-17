@@ -76,21 +76,21 @@ public class Chat extends AppCompatActivity {
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
 
-                                    String msg = doc.getString("Sender")+": " + mess;
-                                    arrayList.add(msg);
-                                    adapter.notifyDataSetChanged();
+                                            String msg = doc.getString("Sender")+": " + mess;
+                                            arrayList.add(msg);
+                                            adapter.notifyDataSetChanged();
 
 
-                                    doc.delete(new BaasHandler<Void>() {
-                                        @Override
-                                        public void handle(BaasResult<Void> res) {
-                                            if (res.isSuccess()) {
-                                                Log.d("LOG", "Document deleted");
-                                            } else {
-                                                Log.e("LOG", "error", res.error());
-                                            }
-                                        }
-                                    });
+                                            doc.delete(new BaasHandler<Void>() {
+                                                @Override
+                                                public void handle(BaasResult<Void> res) {
+                                                    if (res.isSuccess()) {
+                                                        Log.d("LOG", "Document deleted");
+                                                    } else {
+                                                        Log.e("LOG", "error", res.error());
+                                                    }
+                                                }
+                                            });
 
                                 } else {
                                     Log.e("ERROR", "NIE WIEM");
@@ -142,15 +142,15 @@ public class Chat extends AppCompatActivity {
         });
 
 
-    }
+        }
 
-    @Override
+        @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(this,MainScreen.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+            Intent intent = new Intent(this,MainScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
     }
 
 }

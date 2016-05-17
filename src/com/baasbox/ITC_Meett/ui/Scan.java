@@ -200,7 +200,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + "52.6803972" + "," + "-7.0273629" + ") < 50000";
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
@@ -221,11 +221,11 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
 
                         }
                         else{
-                            int matchedInterests = 0;
+                            int matchedInterests = 1;
                             Location myLocation = new Location("point A");
 
-                            myLocation.setLatitude(52.6803972);
-                            myLocation.setLongitude(-7.0273629);
+                            myLocation.setLatitude(Double.parseDouble(mLatitudeText));
+                            myLocation.setLongitude(Double.parseDouble(mLongitudeText));
 
                             Location matchLocation = new Location("point B");
 
@@ -299,7 +299,7 @@ public class Scan extends AppCompatActivity implements GoogleApiClient.Connectio
                                 }
                             }
 
-                            if(matchedInterests > 1){
+                            if(matchedInterests >= 1){
                                 String finalOutPut = userName + "  " + distanceStr;
                                 arrayList.add(finalOutPut);
                                 adapter.notifyDataSetChanged();
