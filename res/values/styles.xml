@@ -14,6 +14,7 @@
 
     <style name="ITCMTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ITCMActionBarTheme</item>
+        <item name="android:colorBackground">@color/background_holo_light</item>
     </style>
 
     <style name="ITCMActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">

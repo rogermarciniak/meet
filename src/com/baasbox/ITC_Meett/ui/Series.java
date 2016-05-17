@@ -190,7 +190,6 @@ public class Series extends ActionBarActivity {
 
         final ImageButton imgButt1 = (ImageButton) findViewById(R.id.opt1);
         final ImageButton imgButt2 = (ImageButton) findViewById(R.id.opt2);
-        final Button upload = (Button) findViewById(R.id.button);
 
         imgButt1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -248,14 +247,7 @@ public class Series extends ActionBarActivity {
             }
 
         });
-        upload.setEnabled(false);
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UploadResults(result);
-                upload.setEnabled(false);
-            }
-        });
+
 
     }
 
