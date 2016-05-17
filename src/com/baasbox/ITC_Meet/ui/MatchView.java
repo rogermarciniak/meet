@@ -60,7 +60,7 @@ public class MatchView extends Activity {
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
-                resizedBitmap = Bitmap.createScaledBitmap(mIcon11, 500, 500, false);
+                resizedBitmap = Bitmap.createScaledBitmap(mIcon11, 350, 350, false);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();

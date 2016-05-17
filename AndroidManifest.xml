@@ -36,7 +36,7 @@
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name="com.baasbox.ITC_Meet.ui.Minigame"
-            android:label="@string/title_activity_series" />
+            android:label="Choose one" />
         <activity
             android:name="com.baasbox.ITC_Meet.ui.Scan"
             android:label="Scan For Matches" />

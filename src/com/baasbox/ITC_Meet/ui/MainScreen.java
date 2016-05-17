@@ -198,6 +198,9 @@ public class MainScreen extends Activity {
 
     }
     @Override
+    public void onBackPressed() {
+    }
+    @Override
     protected void onResume() {
         Log.v("Example", "onResume");
 
