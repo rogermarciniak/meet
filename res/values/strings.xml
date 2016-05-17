@@ -20,4 +20,7 @@
     <string name="title_activity_series">Series</string>
     <string name="title_activity_user_profile">UserProfile</string>
     <string name="title_activity_matched">matched</string>
+    <string name="itc_meet">ITC Meet</string>
+    <string name="by_using_itc_meet_you_agree_to_send_location_data">By using ITC Meet you agree to send location data.</string>
+    <string name="itc_meet_2016">ITC Meet 2016</string>
 </resources>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ImageView;
 import com.baasbox.android.BaasHandler;
 import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
@@ -22,7 +23,7 @@ import com.baasbox.android.RequestToken;
 import com.baasbox.ITC_Meett.R;
 
 /**
- * @authors:
+ * @author:
  * Roger Marciniak (c00169733)
  * Bartosz Zurawski(c00165634)
  */
@@ -38,6 +39,9 @@ public class LoginActivity extends FragmentActivity {
     private View mLoginFormView;
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
+    private TextView mTitle;
+    ImageView mLogo;
+
 
 
 
@@ -52,6 +56,9 @@ public class LoginActivity extends FragmentActivity {
             mSignupOrLogin = savedInstanceState.getParcelable(SIGNUP_TOKEN_KEY);
         }
 
+        mTitle = (TextView) findViewById(R.id.title);
+        mLogo = (ImageView) findViewById(R.id.imageView);
+        mLogo.setImageResource(R.drawable.ic_launcher);
         mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
         mUserView = (EditText) findViewById(R.id.email);
         mUserView.setText(mUsername);
@@ -115,7 +122,7 @@ public class LoginActivity extends FragmentActivity {
         showProgress(false);
         mSignupOrLogin = null;
         if (success) {
-            Intent intent = new Intent(this,MainScreen.class); //Intent intent = new Intent(this,NoteListActivity.class);
+            Intent intent = new Intent(this,MainScreen.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();

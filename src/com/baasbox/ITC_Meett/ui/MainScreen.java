@@ -3,15 +3,10 @@ package com.baasbox.ITC_Meett.ui;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.nfc.Tag;
-import android.os.Build;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +21,6 @@ import com.baasbox.android.BaasResult;
 import com.baasbox.android.BaasUser;
 import com.baasbox.android.RequestToken;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -45,7 +39,7 @@ public class MainScreen extends AppCompatActivity {
 
         //set
         builder.setContentIntent(contentIntent);
-        builder.setSmallIcon(R.drawable.logo);
+        builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setContentText("You've received new message from " + send);
         builder.setContentTitle("New Message");
         builder.setAutoCancel(true);
@@ -110,34 +104,35 @@ public class MainScreen extends AppCompatActivity {
         getIntent().setAction("Already created");
         final TextView UserName = (TextView) findViewById(R.id.userN);
         UserName.setText(BaasUser.current().getName());
-        notifC = 0;
-        final Button profile = (Button) findViewById(R.id.button2);
-        final Button series = (Button) findViewById(R.id.button3);
-        final Button logout = (Button) findViewById(R.id.button4);
-        final Button scan = (Button) findViewById(R.id.button5);
+        UserName.setTextColor(Color.parseColor("#CDDC39"));
+
+        final Button mProfile = (Button) findViewById(R.id.lProfile);
+        final Button mSeries = (Button) findViewById(R.id.lSeries);
+        final Button mLogout = (Button) findViewById(R.id.lLogout);
+        final Button mScan = (Button) findViewById(R.id.lScan);
         final ImageButton notif = (ImageButton) findViewById(R.id.messageTracker);
         notif.setBackgroundResource(R.drawable.msg_off);
         notif.setEnabled(false);
 
-        profile.setOnClickListener(new View.OnClickListener() {
+        mProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onProfile();
             }
         });
-        series.setOnClickListener(new View.OnClickListener() {
+        mSeries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onSeries();
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
+        mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BaasUser.current().logout(logoutHandler);
             }
         });
-        scan.setOnClickListener(new View.OnClickListener() {
+        mScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onScan();

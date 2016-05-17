@@ -5,8 +5,8 @@
     <!-- Login progress -->
     <LinearLayout android:id="@+id/login_status"
         android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -17,7 +17,6 @@
         <TextView
             android:id="@+id/login_status_message"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -32,7 +31,33 @@
         android:background="#FFFFFF">
 
         <LinearLayout style="@style/LoginFormContainer"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:gravity="fill">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="center_horizontal"
+                android:maxHeight="83dp"
+                android:maxWidth="101dp"
+                android:minHeight="83dp"
+                android:minWidth="101dp"
+                android:longClickable="false" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/itc_meet"
+                android:id="@+id/title"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#CDDC39"
+                android:textStyle="bold"
+                android:textSize="35sp"
+                android:height="60dp" />
 
             <EditText
                 android:id="@+id/email"
@@ -57,7 +82,7 @@
 
 
             <Button android:id="@+id/sign_in_button"
-                    android:layout_width="128dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Sign in"
@@ -65,10 +90,11 @@
                     android:paddingRight="32dp"
                     android:layout_gravity="center_horizontal"
                 android:background="#4CAF50"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
             <Button android:id="@+id/register_button"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Register"
@@ -76,9 +102,28 @@
                 android:paddingRight="32dp"
                 android:background="#4CAF50"
                 android:textColor="#FFFFFF"
-                android:elegantTextHeight="false"
                 android:clickable="false"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/by_using_itc_meet_you_agree_to_send_location_data"
+                android:id="@+id/disclaimer"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical|bottom" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/itc_meet_2016"
+                android:id="@+id/signature"
+                android:layout_gravity="center_horizontal"
+                android:gravity="bottom|center_horizontal"
+                android:layout_weight="0.95" />
 
         </LinearLayout>
 
