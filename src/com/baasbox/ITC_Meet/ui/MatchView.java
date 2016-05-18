@@ -99,6 +99,8 @@ public class MatchView extends Activity {
             @Override
             public void handle(BaasResult<List<BaasFile>> res) {
                 if (res.isSuccess()) {
+                    final ImageButton pic = (ImageButton) findViewById(R.id.profPic);
+                    pic.setImageResource(R.drawable.placeh);
                     for (BaasFile doc : res.value()) {
                         Log.d("Pass", doc.getStreamUri().toString());
                         new LoadImg((ImageButton) findViewById(R.id.profPic))
