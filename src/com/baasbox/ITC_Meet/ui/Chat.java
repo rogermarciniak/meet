@@ -63,8 +63,8 @@ public class Chat extends Activity {
         final EditText txt = (EditText) findViewById(R.id.chatBox);
         final ListView chat = (ListView) findViewById(R.id.chatList);
         final Button send = (Button) findViewById(R.id.sentButton);
-
         final String pkgn = getIntent().getExtras().getString("userName");                  //recieve data from previous activity
+
 
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(Chat.this, android.R.layout.simple_spinner_item, arrayList);
@@ -73,6 +73,7 @@ public class Chat extends Activity {
         Log.d("UserName", matchedUser);
 
         chat.setAdapter(adapter);
+
 
         final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {                                                  // scheduler created to keep track of new messages from other users
@@ -194,17 +195,17 @@ public class Chat extends Activity {
         });
 
 
-        }
+    }
 
-        @Override
+    @Override
     public void onBackPressed() {
-                temp = "";
-               Intent myInent = new Intent(this, Chat.class);
-            this.stopService(myInent);
-            Intent i = getBaseContext().getPackageManager()
-                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
+        temp = "";
+        Intent myInent = new Intent(this, Chat.class);
+        this.stopService(myInent);
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
     @Override
     protected void onResume() {

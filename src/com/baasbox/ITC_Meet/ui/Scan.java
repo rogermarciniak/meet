@@ -61,7 +61,6 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-
         // Create an instance of GoogleAPIClient.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addOnConnectionFailedListener(this)
@@ -75,6 +74,7 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
         arrayList = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         matchList.setAdapter(adapter);
+
 
 
         if (scanButton != null) {

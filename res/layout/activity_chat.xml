@@ -35,8 +35,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chatList"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/sentButton" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/chatBox"
+        android:layout_below="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ITC Meet was made to create real life friendships, therefore you can only send 6 messages each. Use them to locate each other and keep all the fun for when you meet!"
+        android:id="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:clickable="true"
+        android:gravity="center_vertical|center_horizontal" />
 
 
 </RelativeLayout>
