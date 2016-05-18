@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profPic"
-        android:background="@android:color/transparent"
         android:layout_below="@+id/userName"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp" />
 
     <TextView
         android:layout_width="wrap_content"

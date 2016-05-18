@@ -7,13 +7,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.baasbox.ITC_Meet.ui.MatchView">
+    tools:context="com.baasbox.ITC_Meet.ui.MatchView"
+    android:background="#FFFFFF">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profPic"
-        android:background="@android:color/transparent"
         android:layout_marginTop="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
