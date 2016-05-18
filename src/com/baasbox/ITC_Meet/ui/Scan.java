@@ -173,7 +173,7 @@ public class Scan extends Activity implements GoogleApiClient.ConnectionCallback
 
     public void scanForMatches(){
 
-        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 50000";
+        String whereString = "distance(Latitude,Longitude," + mLatitudeText + "," + mLongitudeText + ") < 5";
         final BaasQuery PREPARED_QUERY =
                 BaasQuery.builder()
                         .collection("geo")
