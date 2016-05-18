@@ -55,9 +55,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/logged_in_as"
         android:id="@+id/loggedInAs"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/userN"
-        android:layout_toStartOf="@+id/userN" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/messageTracker"
+        android:layout_toEndOf="@+id/messageTracker" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/userN"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/lLogout"
+        android:layout_toEndOf="@+id/lLogout" />
 
     <Button
         android:layout_width="200dp"
