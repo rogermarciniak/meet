@@ -36,7 +36,7 @@ android {
     }
     defaultConfig {
         applicationId "com.baasbox.ITC_Meet"
-        minSdkVersion 16
+        minSdkVersion 11
         targetSdkVersion 23
     }
 

@@ -70,36 +70,6 @@ public class MatchView extends Activity {
             bmImage.setImageBitmap(resized);
         }
     }
-    void clearDB(){
-        BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
-                .orderBy("_creation_date desc")
-                .where("_author='" + BaasUser.current().getName() + "'")
-                .criteria();
-
-
-        BaasFile.fetchAll(filter, new BaasHandler<List<BaasFile>>() {
-            @Override
-            public void handle(BaasResult<List<BaasFile>> res) {
-                if (res.isSuccess()) {
-                    for (BaasFile doc : res.value()) {
-                        Log.d("LOG", "Doc: " + doc);
-                        doc.delete(new BaasHandler<Void>() {
-                            @Override
-                            public void handle(BaasResult<Void> res) {
-                                if (res.isSuccess()) {
-                                    Log.d("LOG", "Document deleted");
-                                } else {
-                                    Log.e("LOG", "error", res.error());
-                                }
-                            }
-                        });
-                        break;
-                    }
-                } else {
-                }
-            }
-        });
-    }
     void newActiv(){
         Intent intent = new Intent(this,Minigame.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -188,77 +158,6 @@ public class MatchView extends Activity {
             }
 
         });
-     /*   pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int PICK_IMAGE_REQUEST = 1;
-                req.setValue(1);
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-
-            }
-
-        });
-    }
-    @Override
-    protected void onActivityResult(final int requestCode,final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Main Activity", "On Activity Result");
-
-
-
-        try {
-            Uri selectedImage=null;
-            if (requestCode == req.getValue() && resultCode == RESULT_OK && null != data) {
-                Log.d("Main Activity", "Gallery");
-                selectedImage = data.getData();
-            }
-
-            if(selectedImage==null)
-            {
-                Log.d("Main Activity", "Back");
-                return;
-            }
-
-            Log.d("Main Activity","Out");
-            String[] filePathColumn = {MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            Log.d("Main Activity",picturePath);
-            cursor.close();
-            Bitmap bmp=BitmapFactory.decodeFile(picturePath);
-            Bitmap resized = Bitmap.createScaledBitmap(bmp, 250, 250, true);
-            final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);
-            pic.setImageBitmap(resized);
-
-            clearDB();
-            //raz raz
-
-            File imgToUpload = new File(picturePath);
-            BaasFile baasFile = new BaasFile();
-            baasFile.upload(BaasACL.grantRole(Role.REGISTERED, Grant.READ), imgToUpload, new BaasHandler<BaasFile>() {
-                @Override
-                public void handle(BaasResult<BaasFile> baasResult) {
-                    if (baasResult.isSuccess()) {
-                        Log.d("Main","file successfully uploaded");
-                        //...
-                    } else {
-                        Log.e("Main", "error in uploading file: " + baasResult.error());
-                    }
-                }
-            });
-
-        } catch (Exception e) {
-            Log.d("Main Activity", "Exception");
-            //req.setValue(0);
-        }
-
-*/
     }
 
     @Override

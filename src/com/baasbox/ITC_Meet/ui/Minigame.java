@@ -62,7 +62,6 @@ public class Minigame extends Activity {
             bmImage.setImageBitmap(resized);
         }
     }
-
     public class MyInt {
         private int value;
         public MyInt(int value) {
@@ -75,7 +74,6 @@ public class Minigame extends Activity {
             this.value = value;
         }
     }
-
     void clearDB(){
         BaasQuery.Criteria filter = BaasQuery.builder().pagination(0, 20)
                 .orderBy("_creation_date desc")

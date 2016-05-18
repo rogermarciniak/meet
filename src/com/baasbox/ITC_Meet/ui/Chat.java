@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class Chat extends Activity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> arrayList;
-
+    public String temp = "";
 
     public class MyInt {                                                    // Function which allows to access inner class variables(INT)
         private int value;
@@ -79,7 +79,6 @@ public class Chat extends Activity {
 
             @Override
             public void run() {
-
                 BaasDocument.fetchAll("ChatLog", new BaasHandler<List<BaasDocument>>() {
                     @Override
                     public void handle(BaasResult<List<BaasDocument>> res) {
@@ -93,22 +92,44 @@ public class Chat extends Activity {
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
 
+                                    if(arrayList.isEmpty()){
+                                        temp = doc.getString("Sender");
+                                        String msg = doc.getString("Sender") + ": " + mess;
+                                        arrayList.add(msg);
+                                        adapter.notifyDataSetChanged();
 
-                                    String msg = doc.getString("Sender") + ": " + mess;
-                                    arrayList.add(msg);
-                                    adapter.notifyDataSetChanged();
 
-
-                                    doc.delete(new BaasHandler<Void>() {
-                                        @Override
-                                        public void handle(BaasResult<Void> res) {
-                                            if (res.isSuccess()) {
-                                                Log.d("LOG", "Document deleted");
-                                            } else {
-                                                Log.e("LOG", "error", res.error());
+                                        doc.delete(new BaasHandler<Void>() {
+                                            @Override
+                                            public void handle(BaasResult<Void> res) {
+                                                if (res.isSuccess()) {
+                                                    Log.d("LOG", "Document deleted");
+                                                } else {
+                                                    Log.e("LOG", "error", res.error());
+                                                }
                                             }
+                                        });
+                                    }
+                                    else{
+                                        if(temp == doc.getString("Sender")){
+
+                                            String msg = doc.getString("Sender") + ": " + mess;
+                                            arrayList.add(msg);
+                                            adapter.notifyDataSetChanged();
+
+                                            doc.delete(new BaasHandler<Void>() {
+                                                @Override
+                                                public void handle(BaasResult<Void> res) {
+                                                    if (res.isSuccess()) {
+                                                        Log.d("LOG", "Document deleted");
+                                                    } else {
+                                                        Log.e("LOG", "error", res.error());
+                                                    }
+                                                }
+                                            });
                                         }
-                                    });
+
+                                    }
 
                                 } else {}
                             }
@@ -177,7 +198,7 @@ public class Chat extends Activity {
 
         @Override
     public void onBackPressed() {
-
+                temp = "";
                Intent myInent = new Intent(this, Chat.class);
             this.stopService(myInent);
             Intent i = getBaseContext().getPackageManager()

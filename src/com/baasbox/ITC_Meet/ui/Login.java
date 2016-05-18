@@ -27,7 +27,7 @@ import com.baasbox.ITC_Meet.R;
  */
 public class Login extends FragmentActivity {
     private final static String SIGNUP_TOKEN_KEY = "signup_token_key";
-    public static final String EXTRA_USERNAME = "com.baasbox.deardiary.username.EXTRA";
+    public static final String EXTRA_USERNAME = "com.baasbox.ITC_Meet.username.EXTRA";
 
     private String mUsername;
     private String mPassword;
@@ -198,7 +198,7 @@ public class Login extends FragmentActivity {
 
     @TargetApi(Build.VERSION_CODES.M)
     private void showProgress(final boolean show) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginStatusView.setVisibility(View.VISIBLE);
