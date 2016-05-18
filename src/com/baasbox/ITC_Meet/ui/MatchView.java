@@ -149,7 +149,6 @@ public class MatchView extends Activity {
                         }
                     }
                 });
-        final ImageButton pic = (ImageButton) findViewById(R.id.imageButton);
         final Button chatBtn = (Button) findViewById(R.id.sendMessageButton);
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
