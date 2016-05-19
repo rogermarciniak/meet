@@ -92,8 +92,8 @@ public class Chat extends Activity {
                                 Log.d("Message List ", arrayList.toString());
 
                                 if (BaasUser.current().getName().equals(doc.getString("Receiver"))) {
-
-                                    if(arrayList.isEmpty()){
+                                    temp = doc.getString("Sender");
+                                    if(arrayList.size() < 2){
                                         temp = doc.getString("Sender");
                                         String msg = doc.getString("Sender") + ": " + mess;
                                         arrayList.add(msg);
@@ -112,7 +112,7 @@ public class Chat extends Activity {
                                         });
                                     }
                                     else{
-                                        if(temp == doc.getString("Sender")){
+                                        if(temp.equals(doc.getString("Sender"))){
 
                                             String msg = doc.getString("Sender") + ": " + mess;
                                             arrayList.add(msg);
